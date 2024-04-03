@@ -8,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  isDarkMode:boolean;
 
+  constructor() {
+    this.isDarkMode = false;
+  }
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    document.documentElement.classList.toggle('dark');
+  }
 }
