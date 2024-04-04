@@ -36,7 +36,7 @@ module.exports = {
   plugins: [
     plugin(function({addUtilities}){
       addUtilities({
-        '.sqr-btn-light': {
+        '.btn-light': {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -44,7 +44,7 @@ module.exports = {
           backgroundColor: '#D9F0FF',
           color: 'black'
         },
-        '.sqr-btn-dark': {
+        '.btn-dark': {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
