@@ -6,6 +6,7 @@ import { MoreButtonComponent } from './ui/more-button/more-button.component';
 import { AddButtonComponent } from './ui/add-button/add-button.component';
 import { BackButtonComponent } from './ui/back-button/back-button.component';
 import { CloseButtonComponent } from './ui/close-button/close-button.component';
+import { DeleteButtonComponent } from './ui/delete-button/delete-button.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { CloseButtonComponent } from './ui/close-button/close-button.component';
     AddButtonComponent,
     BackButtonComponent,
     CloseButtonComponent,
+    DeleteButtonComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
