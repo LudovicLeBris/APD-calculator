@@ -7,6 +7,7 @@ import { AddButtonComponent } from './ui/add-button/add-button.component';
 import { BackButtonComponent } from './ui/back-button/back-button.component';
 import { CloseButtonComponent } from './ui/close-button/close-button.component';
 import { DeleteButtonComponent } from './ui/delete-button/delete-button.component';
+import { ThemeButtonComponent } from './ui/theme-button/theme-button.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { DeleteButtonComponent } from './ui/delete-button/delete-button.componen
     BackButtonComponent,
     CloseButtonComponent,
     DeleteButtonComponent,
+    ThemeButtonComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
