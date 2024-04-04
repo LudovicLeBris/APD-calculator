@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -31,6 +33,27 @@ module.exports = {
       }),
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({addUtilities}){
+      addUtilities({
+        '.sqr-btn-light': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '.375rem',
+          backgroundColor: '#D9F0FF',
+          color: 'black'
+        },
+        '.sqr-btn-dark': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '.375rem',
+          backgroundColor: '#1756B6',
+          color: 'white'
+        },
+      })
+    })
+  ],
 }
 
