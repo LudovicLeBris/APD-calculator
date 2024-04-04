@@ -67,6 +67,37 @@ module.exports = {
             boxShadow: '1px 0 6px rgba(27, 131, 245, 0.25), -1px 0 6px rgba(27, 131, 245, 0.25), 0 1px 6px rgba(27, 131, 245, 0.25), 0 -1px 6px rgba(27, 131, 245, 0.25)'
             }
         },
+        '.btn2-light': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '.375rem',
+          backgroundColor: '#2EA0FF',
+          color: 'black',
+          border: '0',
+          '&:hover': {
+            border: '1px solid #1756B6',
+          },
+          '&:active' : {
+            border: '1px solid #142E57',
+            boxShadow: '1px 0 6px rgba(23, 86, 182, 0.25), -1px 0 6px rgba(23, 86, 182, 0.25), 0 1px 6px rgba(23, 86, 182, 0.25), 0 -1px 6px rgba(23, 86, 182, 0.25)'
+          }
+        },
+        '.btn2-dark': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '.375rem',
+          backgroundColor: '#146CE1',
+          color: 'white',
+          '&:hover': {
+            border: '1px solid #2EA0FF',
+          },
+          '&:active' : {
+            border: '1px solid #59C0FF',
+            boxShadow: '1px 0 6px rgba(27, 131, 245, 0.25), -1px 0 6px rgba(27, 131, 245, 0.25), 0 1px 6px rgba(27, 131, 245, 0.25), 0 -1px 6px rgba(27, 131, 245, 0.25)'
+            }
+        },
       })
     })
   ],
