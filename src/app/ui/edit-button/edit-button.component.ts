@@ -18,7 +18,7 @@ export class EditButtonComponent implements OnInit {
   buttonLight: string = 'btn-primary-light';
   buttonDark: string = 'btn-primary-dark';
 
-  @Input('variant') variant:boolean = false;
+  @Input() variant: boolean = false;
 
   ngOnInit(): void {
     if (this.variant) {
