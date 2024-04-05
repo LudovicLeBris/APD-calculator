@@ -42,6 +42,13 @@ module.exports = {
           alignItems: 'center',
           borderRadius: '.375rem',
         },
+        '.text-button': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '.375rem',
+          padding: '0 16px'
+        },
         '.btn-primary-light': {
           backgroundColor: '#2EA0FF',
           color: 'black',
