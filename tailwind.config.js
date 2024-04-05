@@ -10,21 +10,21 @@ module.exports = {
     colors: {
       'black': '#000',
       'bg-light': '#FFF',
-      'surface-light': '#EEF9FF',
-      'primary-light': '#2EA0FF',
-      'primary-variant-light': '#146CE1',
-      'secondary-light': '#1756B6',
-      'secondary-variant-light': '#142E57',
-      'tertiary-light': '#D9F0FF',
-      'warning-light': '#FF352E',
-      'bg-dark': '#142E57',
-      'surface-dark': '#1756B6',
-      'primary-dark': '#146CE1',
-      'primary-variant-dark': '#2EA0FF',
-      'secondary-dark': '#1B83F5',
-      'secondary-variant-dark': '#59C0FF',
-      'tertiary-dark': '#1756B6',
-      'warning-dark': '#E02914',
+      'surface-light': '#EEF9FF', // rgb(238, 249, 255)
+      'primary-light': '#2EA0FF', //rgb(46, 160, 255)
+      'primary-variant-light': '#146CE1', // rgb (20, 108, 225)
+      'secondary-light': '#1756B6', // rgb(23, 86, 182)
+      'secondary-variant-light': '#142E57', // rgb(20, 46, 87)
+      'tertiary-light': '#D9F0FF', // rgb(217, 24à, 255)
+      'warning-light': '#FF352E', // rgb(255, 53, 46)
+      'bg-dark': '#142E57', // rgb(20, 46, 87)
+      'surface-dark': '#1756B6', // rgb(23, 86, 182)
+      'primary-dark': '#146CE1', // rgb (20, 108, 225)
+      'primary-variant-dark': '#2EA0FF', //rgb(46, 160, 255)
+      'secondary-dark': '#1B83F5', // rgb(27, 131, 245)
+      'secondary-variant-dark': '#59C0FF', // rgb(89, 192, 255)
+      'tertiary-dark': '#1756B6', // rgb(23, 86, 182)
+      'warning-dark': '#E02914', // rgb (224, 41, 20)
     },
     extend: {
       backgroundImage: (theme) => ({
@@ -36,11 +36,59 @@ module.exports = {
   plugins: [
     plugin(function({addUtilities}){
       addUtilities({
-        '.btn-light': {
+        '.button': {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: '.375rem',
+        },
+        '.btn-primary-light': {
+          backgroundColor: '#2EA0FF',
+          color: 'black',
+          border: '0',
+          '&:hover': {
+            border: '1px solid #146CE1',
+          },
+          '&:active' : {
+            border: '1px solid #1756B6',
+            boxShadow: 'rgba(23, 86, 182, 0.75) 0px 2px 10px'
+          }
+        },
+        '.btn-primary-dark': {
+          backgroundColor: '#146CE1',
+          color: 'white',
+          '&:hover': {
+            border: '1px solid #1B83F5',
+          },
+          '&:active' : {
+            border: '1px solid #2EA0FF',
+            boxShadow: 'rgba(46, 160, 255, 0.75) 0px 2px 10px'
+            }
+        },
+        '.btn-secondary-light': {
+          backgroundColor: '#1756B6',
+          color: 'white',
+          border: '0',
+          '&:hover': {
+            border: '1px solid #146CE1',
+          },
+          '&:active' : {
+            border: '1px solid #2EA0FF',
+            boxShadow: 'rgba(46, 160, 255, 0.75) 0px 2px 10px'
+          }
+        },
+        '.btn-secondary-dark': {
+          backgroundColor: '#1B83F5',
+          color: 'black',
+          '&:hover': {
+            border: '1px solid #146CE1',
+          },
+          '&:active' : {
+            border: '1px solid #2EA0FF',
+            boxShadow: 'rgba(46, 160, 255, 0.75) 0px 2px 10px'
+            }
+        },
+        '.btn-tertiary-light': {
           backgroundColor: '#D9F0FF',
           color: 'black',
           border: '0',
@@ -48,15 +96,11 @@ module.exports = {
             border: '1px solid #2EA0FF',
           },
           '&:active' : {
-            border: '1px solid #1756B6',
-            boxShadow: '1px 0 6px rgba(23, 86, 182, 0.25), -1px 0 6px rgba(23, 86, 182, 0.25), 0 1px 6px rgba(23, 86, 182, 0.25), 0 -1px 6px rgba(23, 86, 182, 0.25)'
+            border: '1px solid #146CE1',
+            boxShadow: 'rgba(20, 108, 225, 0.75) 0px 2px 10px'
           }
         },
-        '.btn-dark': {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '.375rem',
+        '.btn-tertiary-dark': {
           backgroundColor: '#1756B6',
           color: 'white',
           '&:hover': {
@@ -64,38 +108,7 @@ module.exports = {
           },
           '&:active' : {
             border: '1px solid #1B83F5',
-            boxShadow: '1px 0 6px rgba(27, 131, 245, 0.25), -1px 0 6px rgba(27, 131, 245, 0.25), 0 1px 6px rgba(27, 131, 245, 0.25), 0 -1px 6px rgba(27, 131, 245, 0.25)'
-            }
-        },
-        '.btn2-light': {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '.375rem',
-          backgroundColor: '#2EA0FF',
-          color: 'black',
-          border: '0',
-          '&:hover': {
-            border: '1px solid #1756B6',
-          },
-          '&:active' : {
-            border: '1px solid #142E57',
-            boxShadow: '1px 0 6px rgba(23, 86, 182, 0.25), -1px 0 6px rgba(23, 86, 182, 0.25), 0 1px 6px rgba(23, 86, 182, 0.25), 0 -1px 6px rgba(23, 86, 182, 0.25)'
-          }
-        },
-        '.btn2-dark': {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '.375rem',
-          backgroundColor: '#146CE1',
-          color: 'white',
-          '&:hover': {
-            border: '1px solid #2EA0FF',
-          },
-          '&:active' : {
-            border: '1px solid #59C0FF',
-            boxShadow: '1px 0 6px rgba(27, 131, 245, 0.25), -1px 0 6px rgba(27, 131, 245, 0.25), 0 1px 6px rgba(27, 131, 245, 0.25), 0 -1px 6px rgba(27, 131, 245, 0.25)'
+            boxShadow: 'rgba(27, 131, 245, 0.75) 0px 2px 10px'
             }
         },
       })

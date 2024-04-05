@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-  <div class="size-8 btn2-light dark:btn2-dark" (click)="toggleDarkMode()">
+  <div class="size-8 button btn-primary-light dark:btn-primary-dark" (click)="toggleDarkMode()">
     @if (isDarkMode) {
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
