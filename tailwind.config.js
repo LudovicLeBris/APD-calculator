@@ -111,6 +111,28 @@ module.exports = {
             boxShadow: 'rgba(27, 131, 245, 0.75) 0px 2px 10px'
             }
         },
+        '.btn-warning-light': {
+          backgroundColor: '#FF352E',
+          color: 'dark',
+          '&:hover': {
+            border: '1px solid #E02914',
+          },
+          '&:active' : {
+            border: '1px solid #BC2914',
+            boxShadow: 'rgba(188, 41, 20, 0.75) 0px 2px 10px'
+            }
+        },
+        '.btn-warning-dark': {
+          backgroundColor: '#E02914',
+          color: 'dark',
+          '&:hover': {
+            border: '1px solid #FF352E',
+          },
+          '&:active' : {
+            border: '1px solid #FF0801',
+            boxShadow: 'rgba(255, 8, 1, 0.75) 0px 2px 10px'
+            }
+        },
       })
     })
   ],
