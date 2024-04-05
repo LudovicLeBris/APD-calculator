@@ -9,6 +9,7 @@ import { CloseButtonComponent } from './ui/close-button/close-button.component';
 import { DeleteButtonComponent } from './ui/delete-button/delete-button.component';
 import { ThemeButtonComponent } from './ui/theme-button/theme-button.component';
 import { TextButtonComponent } from './ui/text-button/text-button.component';
+import { DataResultComponent } from './ui/data-result/data-result.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ import { TextButtonComponent } from './ui/text-button/text-button.component';
     DeleteButtonComponent,
     ThemeButtonComponent,
     TextButtonComponent,
+    DataResultComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
