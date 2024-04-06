@@ -10,6 +10,7 @@ import { DeleteButtonComponent } from './ui/delete-button/delete-button.componen
 import { ThemeButtonComponent } from './ui/theme-button/theme-button.component';
 import { TextButtonComponent } from './ui/text-button/text-button.component';
 import { DataResultComponent } from './ui/data-result/data-result.component';
+import { ProjectCardComponent } from './ui/project-card/project-card.component';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ import { DataResultComponent } from './ui/data-result/data-result.component';
     ThemeButtonComponent,
     TextButtonComponent,
     DataResultComponent,
+    ProjectCardComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

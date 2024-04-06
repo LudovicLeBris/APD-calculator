@@ -28,8 +28,8 @@ module.exports = {
     },
     extend: {
       backgroundImage: (theme) => ({
-        'gradient-light': `linear-gradient(to right, #EEF9FF, #FFF)`,
-        'gradient-dark': `linear-gradient(to right, #1756B6, #142E57)`,
+        'gradient-light': `linear-gradient(to bottom, #EEF9FF, #FFF)`,
+        'gradient-dark': `linear-gradient(to bottom, #1756B6, #142E57)`,
       }),
     },
   },
