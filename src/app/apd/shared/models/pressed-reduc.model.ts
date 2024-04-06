@@ -1,6 +1,6 @@
-import { DataApd } from "./data-apd.model";
+import { Singularity } from "./singularity.model";
 
-export class PressedReduc extends DataApd {
+export class PressedReduc extends Singularity {
   constructor() {
     super();
     this.apiReference = 'pressed_reducer';

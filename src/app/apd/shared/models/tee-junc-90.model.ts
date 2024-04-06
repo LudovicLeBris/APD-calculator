@@ -1,6 +1,6 @@
-import { DataApd } from "./data-apd.model";
+import { Singularity } from "./singularity.model";
 
-export class TeeJunc90 extends DataApd {
+export class TeeJunc90 extends Singularity {
   constructor() {
     super();
     this.apiReference = '90_junc_tee';
