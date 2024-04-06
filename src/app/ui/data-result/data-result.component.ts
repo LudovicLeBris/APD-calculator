@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataApd } from '../../apd/shared/models/data-apd.model';
 import { DataTypesService } from '../../apd/shared/data-types.service';
+import { Singularity } from '../../apd/shared/models/singularity.model';
 
 @Component({
   selector: 'app-data-result',
@@ -10,7 +11,7 @@ import { DataTypesService } from '../../apd/shared/data-types.service';
   styleUrl: './data-result.component.css'
 })
 export class DataResultComponent implements OnInit {
-  dataResult: DataApd | undefined;
+  dataResult: DataApd | Singularity | undefined;
   @Input() type!: string;
   name: string = '';
   icon: string = '';
@@ -26,8 +27,12 @@ export class DataResultComponent implements OnInit {
     if (this.dataResult) {
       this.name = this.dataResult.getName();
       this.icon = this.dataResult.getIcon();
-      this.value = this.dataResult.getValue();
-      this.unit = this.dataResult.getUnit();
+      if (this.dataResult instanceof DataApd) {
+        this.unit = this.dataResult.getUnit();
+        this.value = this.dataResult.getValue();
+      } else if (this.dataResult instanceof Singularity) {
+        this.value = this.dataResult.getQuantity();
+      }
     }
   }
 }

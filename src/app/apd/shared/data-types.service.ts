@@ -29,6 +29,7 @@ import { TeeSep45 } from './models/tee-sep-45.model';
 import { TeeSep90 } from './models/tee-sep-90.model';
 import { Temperature } from './models/temperature.model';
 import { Width } from './models/width.model';
+import { Singularity } from './models/singularity.model';
 
 @Injectable({
   providedIn: 'root'
@@ -68,8 +69,8 @@ export class DataTypesService {
     new Width
   ]
 
-  getTypes(dataType: string):DataApd | undefined {
-    return this.types.find((element:DataApd) => dataType == element.getApiReference())
+  getTypes(dataType: string): DataApd | Singularity | undefined {
+    return this.types.find((element:DataApd | Singularity) => dataType == element.getApiReference())
   }
 
 }
