@@ -1,17 +1,18 @@
-<app-navbar class="fixed w-full"></app-navbar>
+<app-navbar class=" w-full"></app-navbar>
 
-<div class="mx-4 flex flex-wrap">
-  <app-edit-button class="m-4"></app-edit-button>
-  <app-edit-button class="m-4" [variant]=true></app-edit-button>
-  <app-more-button class="m-4"></app-more-button>
-  <app-add-button class="m-4"></app-add-button>
-  <app-back-button class="m-4"></app-back-button>
-  <app-close-button class="m-4"></app-close-button>
-  <app-delete-button class="m-4"></app-delete-button>
-  <app-theme-button class="m-4"></app-theme-button>
-  <app-text-button class="m-4" content="ajouter un projet"></app-text-button>
-  <app-data-result class="m-4" type='flowspeed'></app-data-result>
+<div class="m-4 flex flex-wrap gap-4">
+  <app-edit-button></app-edit-button>
+  <app-edit-button [variant]=true></app-edit-button>
+  <app-more-button></app-more-button>
+  <app-add-button></app-add-button>
+  <app-back-button></app-back-button>
+  <app-close-button></app-close-button>
+  <app-delete-button></app-delete-button>
+  <app-theme-button></app-theme-button>
+  <app-text-button content="ajouter un projet"></app-text-button>
+  <app-data-result type='flowspeed'></app-data-result>
   <app-project-card></app-project-card>
+  <app-list-card></app-list-card>
 </div>
 
 <router-outlet></router-outlet>

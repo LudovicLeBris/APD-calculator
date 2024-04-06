@@ -1,0 +1,19 @@
+<div class="h-16 w-full flex items-center gap-2 p-1 rounded-lg bg-gradient-light dark:bg-gradient-dark dark:text-bg-light">
+  <div>
+    <app-edit-button [variant]=true></app-edit-button>
+  </div>
+  <div class="flex flex-col flex-grow">
+    <div class="flex-grow text-center font-semibold ">
+      <h3>{{ name }}</h3>
+    </div>
+    <div class="flex justify-between items-end gap-2">
+      <div class="text-sm">
+        <p>Matériau : <span>{{ material.getValue() }}</span></p>
+        <p>Pdc total : <span>{{ totalApd.getValue() }}</span> Pa</p>
+      </div>
+      <div>
+        <app-more-button></app-more-button>
+      </div>
+    </div>
+  </div>
+</div>
