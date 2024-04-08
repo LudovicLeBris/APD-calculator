@@ -21,8 +21,6 @@ export class DataResultComponent implements OnInit {
   constructor(private dataType:DataTypesService) {}
 
   ngOnInit(): void {
-    console.log(this.type);
-
     this.dataResult = this.dataType.getTypes(this.type);
     if (this.dataResult) {
       this.name = this.dataResult.getName();
