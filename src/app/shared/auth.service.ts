@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, delay, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LoginPayload } from '../types/loginPyaload';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { LoginPayload } from '../types/loginPyaload';
 export class AuthService {
 
   endpoint: string = environment.apiUrl;
-  headers = new HttpHeaders().set('Content-type', 'application/json').append('Authorization', 'Bearer ');
+  headers = new HttpHeaders().set('Content-type', 'application/json');
   currentUser={};
 
   constructor(
@@ -22,6 +22,12 @@ export class AuthService {
       .post<any>(`${this.endpoint}/login`, payload)
       .subscribe((res:any) => {
         localStorage.setItem('jwt', res.token);
+        this.getUserProfile().subscribe(
+          (response) => {
+            this.currentUser = response.content;
+            localStorage.setItem('userProfil', JSON.stringify(this.currentUser))
+          }
+        )
       })
   }
 
