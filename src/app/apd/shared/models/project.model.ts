@@ -7,8 +7,8 @@ export class Project {
   id: number | undefined = undefined;
   name: string = '';
   userId: number | undefined = undefined;
-  generalAltitude: number = 0;
-  generalTemperature: number = 20.0;
+  generalAltitude: Altitude = new Altitude;
+  generalTemperature: Temperature = new Temperature;
   ductNetworks: DuctNetwork[] = [];
 
 }
