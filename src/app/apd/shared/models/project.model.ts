@@ -7,13 +7,10 @@ export class Project {
   id: number | undefined = undefined;
   name: string = '';
   userId: number | undefined = undefined;
-  generalAltitude: Altitude = new Altitude;
-  generalTemperature: Temperature = new Temperature;
+  generalAltitude: number = 0;
+  generalTemperature: number = 20.0;
   ductNetworks: DuctNetwork[] = [];
 
-  constructor() {
-    this.generalAltitude.setValue(0);
-    this.generalTemperature.setValue(20);
-  }
-
 }
+
+export type PayloadProject = Omit<Project, "id" | "userId" | "ductNetworks">;
