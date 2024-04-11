@@ -12,6 +12,7 @@ export class AuthService {
   endpoint: string = environment.apiUrl;
   headers = new HttpHeaders().set('Content-type', 'application/json');
   currentUser={};
+  isLogged: boolean = false;
 
   constructor(
     private http:HttpClient,
@@ -26,6 +27,7 @@ export class AuthService {
           (response) => {
             this.currentUser = response.content;
             localStorage.setItem('userProfil', JSON.stringify(this.currentUser))
+            this.isLogged = true;
           }
         )
       })
@@ -37,5 +39,12 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('jwt');
+  }
+
+  logout() {
+    localStorage.removeItem('userProfil');
+    this.currentUser = {};
+    this.isLogged = false;
+    localStorage.removeItem('jwt');
   }
 }
