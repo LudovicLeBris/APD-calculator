@@ -1,9 +1,8 @@
 import { Altitude } from "./altitude.model";
-import { DuctNetwork } from "./duct-network.model";
+import { DuctNetwork, JsonDuctNetwork } from "./duct-network.model";
 import { Temperature } from "./temperature.model";
 
 export class Project {
-
   id: number | undefined = undefined;
   name: string = '';
   userId: number | undefined = undefined;
@@ -13,4 +12,11 @@ export class Project {
 
 }
 
-export type PayloadProject = Omit<Project, "id" | "userId" | "ductNetworks">;
+export interface JsonProject {
+  id?: number,
+  name:string,
+  userId?: number,
+  generalAltitude: number,
+  generalTemperature: number,
+  ductNetworks: JsonDuctNetwork[]
+}

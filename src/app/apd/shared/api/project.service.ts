@@ -2,8 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppUser } from '../../../types/user';
 import { environment } from '../../../../environments/environment';
-import { PayloadProject, Project } from '../models/project.model';
+import { JsonProject, Project } from '../models/project.model';
 import { Observable, catchError, of, tap } from 'rxjs';
+import { DuctNetwork, JsonDuctNetwork } from '../models/duct-network.model';
+import { DuctNetworkService } from './duct-network.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,50 +17,55 @@ export class ProjectService {
 
   constructor(
     private http:HttpClient,
+    private ductNetworkService: DuctNetworkService,
   ) {
     this.userProfile = JSON.parse(localStorage.getItem('userProfil')!)
   }
 
-  getProjects(): Observable<{message: string, content: Project[] | {field:string, message:string}[]}> {
-    return this.http.get<{message: string, content: Project[]}>(`${this.url}/apd/users/${this.userProfile.id}/projects`).pipe(
+  getProjects(): Observable<{message: string, content: JsonProject[] | {field:string, message:string}[]}> {
+    return this.http.get<{message: string, content: JsonProject[]}>(`${this.url}/apd/users/${this.userProfile.id}/projects`).pipe(
       tap((response) => console.log(response)),
       catchError((error) => this.handleError(error, error.error))
     );
   }
 
-  getProjectById(projectId: number): Observable<{message: string, content:Project | {field:string, message:string}[]}> {
-    return this.http.get<{message: string, content:Project}>(`${this.url}/apd/users/${this.userProfile.id}/projects/${projectId}`).pipe(
+  getProjectById(projectId: number): Observable<{message: string, content:JsonProject | {field:string, message:string}[]}> {
+    return this.http.get<{message: string, content:JsonProject}>(`${this.url}/apd/users/${this.userProfile.id}/projects/${projectId}`).pipe(
       tap((response) => console.log(response)),
       catchError((error) => this.handleError(error, error.error))
     );
   }
 
-  addProject(project: Project): Observable<{message: string, content:Project | {field:string, message:string}[]}> {
+  addProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | {field:string, message:string}[]}> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
-    return this.http.post<{message: string, content:Project}>(`${this.url}/apd/users/${this.userProfile.id}/projects`, project, httpOptions).pipe(
+    if (project instanceof(Project)) {
+      project = this.projectToJson(project)
+    }
+    return this.http.post<{message: string, content:JsonProject}>(`${this.url}/apd/users/${this.userProfile.id}/projects`, project, httpOptions).pipe(
       tap((response) => console.log(response),
       catchError((error) => this.handleError(error, error.error))
       )
     );
   }
 
-  updateProject(project: Partial<PayloadProject>, projectId: number): Observable<{message: string, content:Project | {field:string, message:string}[]}> {
+  updateProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | {field:string, message:string}[]}> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
+    if (project instanceof(Project)) {
+      project = this.projectToJson(project)
     }
-    console.log(project);
-
-    return this.http.patch<{message: string, content:Project}>(`${this.url}/apd/users/${this.userProfile.id}/projects/${projectId}`, project, httpOptions).pipe(
+    return this.http.patch<{message: string, content:JsonProject}>(`${this.url}/apd/users/${this.userProfile.id}/projects/${project.id}`, project, httpOptions).pipe(
       tap((response) => console.log(response),
       catchError((error) => this.handleError(error, error.error))
       )
     );
   }
 
-  deleteProject(project: Project): Observable<{message: string, content:Project | {field:string, message:string}[]}> {
-    return this.http.delete<{message: string, content:Project}>(`${this.url}/apd/users/${this.userProfile.id}/projects/${project.id}`).pipe(
+  deleteProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | {field:string, message:string}[]}> {
+    return this.http.delete<{message: string, content:JsonProject}>(`${this.url}/apd/users/${this.userProfile.id}/projects/${project.id}`).pipe(
       tap((response) => console.log(response),
       catchError((error) => this.handleError(error, error.error))
       )
@@ -69,4 +76,44 @@ export class ProjectService {
     console.log(error);
     return of(errorValue);
   }
+
+  projectToJson(project: Project): JsonProject {
+    const jsonDuctNetworks: JsonDuctNetwork[] = [];
+
+    project.ductNetworks.forEach(ductNetwork => {
+      const jsonDuctNetwork = this.ductNetworkService.ductNetworkToJson(ductNetwork);
+      jsonDuctNetworks.push(jsonDuctNetwork);
+    });
+
+    const jsonProject: JsonProject = {
+      id: project.id,
+      name: project.name,
+      userId: project.userId,
+      generalAltitude: project.generalAltitude.getValue() as number,
+      generalTemperature: project.generalTemperature.getValue() as number,
+      ductNetworks: jsonDuctNetworks
+    }
+
+    return jsonProject;
+  }
+
+  JsonToProject(jsonProject: JsonProject): Project {
+    const ductNetworks: DuctNetwork[] = [];
+
+    jsonProject.ductNetworks.forEach(jsonDuctNetwork => {
+      const ductNetwork = this.ductNetworkService.jsonToDuctNetwork(jsonDuctNetwork);
+      ductNetworks.push(ductNetwork);
+    });
+
+    const project = new Project;
+    project.id = jsonProject.id;
+    project.name = jsonProject.name;
+    project.userId = jsonProject.userId;
+    project.generalAltitude.setValue(jsonProject.generalAltitude);
+    project.generalTemperature.setValue(jsonProject.generalTemperature);
+    project.ductNetworks = ductNetworks;
+
+    return project;
+  }
+
 }
