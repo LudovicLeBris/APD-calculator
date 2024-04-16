@@ -1,5 +1,8 @@
+import { diameters } from "../../../types/diameters";
+import { materials } from "../../../types/materials";
+import { singularities } from "../../../types/singularity";
 import { AdditionalApd } from "./additional-apd.model";
-import { Air } from "./air.model";
+import { Air, JsonAir } from "./air.model";
 import { Diameter } from "./diameter.model";
 import { FlowRate } from "./flow-rate.model";
 import { FlowSpeed } from "./flow-speed.model";
@@ -29,10 +32,32 @@ export class DuctSection {
   singularities: Singularity[] = [];
   additionalApd: AdditionalApd = new AdditionalApd;
   equivDiameter: number = 0;
-  ductSectionSection: number = 0;
+  ductSectionsSection: number = 0;
   flowspeed: FlowSpeed = new FlowSpeed;
   linearApd: LinearApd = new LinearApd;
   singularApd: SingularApd = new SingularApd;
   totalApd: TotalApd = new TotalApd;
 
+}
+
+export interface JsonDuctSection {
+  id?: number | undefined,
+  name: string,
+  ductNetworkId?: number | undefined,
+  air : JsonAir,
+  shape: 'circular' | 'rectangular',
+  diameter?: diameters | undefined,
+  width?: number | undefined,
+  height?: number | undefined,
+  material : materials,
+  flowrate: number,
+  length: number,
+  singularities: singularities,
+  additionalApd?: number | undefined,
+  equivDiameter?: number,
+  ductSectionsSection?: number | undefined,
+  flowspeed?: number | undefined,
+  linearApd?: number | undefined,
+  singularApd?: number | undefined,
+  totalApd?: number | undefined
 }
