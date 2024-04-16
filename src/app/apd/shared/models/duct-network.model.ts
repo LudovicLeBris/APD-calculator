@@ -1,7 +1,8 @@
+import { materials } from "../../../types/materials";
 import { AdditionalApd } from "./additional-apd.model";
-import { Air } from "./air.model";
+import { Air, JsonAir } from "./air.model";
 import { Altitude } from "./altitude.model";
-import { DuctSection } from "./duct-section.model";
+import { DuctSection, JsonDuctSection } from "./duct-section.model";
 import { Material } from "./material.model";
 import { SingularApd } from "./singular-apd.model";
 import { Temperature } from "./temperature.model";
@@ -25,7 +26,23 @@ export class DuctNetwork {
 
   constructor() {
     this.altitude.setValue(0);
-    this.temperature.setValue(20);
+    this.temperature.setValue(20.0);
   }
 
+}
+
+export interface JsonDuctNetwork {
+  id?: number,
+  name: string,
+  projectId?: number,
+  air: JsonAir,
+  altitude: number,
+  temperature: number,
+  generalMaterial: materials,
+  additionalApd?: number,
+  ductSections: JsonDuctSection[],
+  totalLinearApd?: number,
+  totalSingularApd?: number,
+  totalAdditionalApd?: number,
+  totalApd?: number
 }
