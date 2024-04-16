@@ -13,3 +13,10 @@ export class Air {
     this.altitude.setValue(0);
   }
 }
+
+export interface JsonAir {
+  viscosity: number,
+  density: number,
+  temperature: number,
+  altitude: number,
+}

@@ -3,7 +3,7 @@ export abstract class DataApd {
   protected name: string = '';
   protected icon: string = '';
   protected unit: string | undefined = undefined;
-  protected value: number | string = 0;
+  protected value: number | string | undefined;
 
   getApiReference(): string {
     return this.apiReference;
@@ -21,11 +21,11 @@ export abstract class DataApd {
     return this.unit;
   }
 
-  getValue(): number | string {
+  getValue(): number | string | undefined {
     return this.value;
   }
 
-  setValue(value: number | string): void {
+  setValue(value: number | string | undefined): void {
     this.value = value;
   }
 
