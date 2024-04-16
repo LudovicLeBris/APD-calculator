@@ -20,7 +20,6 @@ export class ListCardComponent implements OnInit {
   totalApd: TotalApd = new TotalApd;
 
   ngOnInit(): void {
-    this.material.setValue('Acier galvanisé');
     this.totalApd.setValue(200);
   }
 }
