@@ -15,7 +15,7 @@ export class DataResultComponent implements OnInit {
   @Input() type!: string;
   name: string = '';
   icon: string = '';
-  value: number | string = 0;
+  value: number | string | undefined;
   unit: string | undefined = '';
 
   constructor(private dataType:DataTypesService) {}
