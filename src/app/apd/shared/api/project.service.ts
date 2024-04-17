@@ -6,6 +6,7 @@ import { JsonProject, Project } from '../models/project.model';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { DuctNetwork, JsonDuctNetwork } from '../models/duct-network.model';
 import { DuctNetworkService } from './duct-network.service';
+import { Errormessage } from '../../../types/error-message';
 
 @Injectable({
   providedIn: 'root'
@@ -22,21 +23,21 @@ export class ProjectService {
     this.userProfile = JSON.parse(localStorage.getItem('userProfil')!)
   }
 
-  getProjects(): Observable<{message: string, content: JsonProject[] | {field:string, message:string}[]}> {
+  getProjects(): Observable<{message: string, content: JsonProject[] | Errormessage[]}> {
     return this.http.get<{message: string, content: JsonProject[]}>(`${this.url}/apd/users/${this.userProfile.id}/projects`).pipe(
       tap((response) => console.log(response)),
       catchError((error) => this.handleError(error, error.error))
     );
   }
 
-  getProjectById(projectId: number): Observable<{message: string, content:JsonProject | {field:string, message:string}[]}> {
+  getProjectById(projectId: number): Observable<{message: string, content:JsonProject | Errormessage[]}> {
     return this.http.get<{message: string, content:JsonProject}>(`${this.url}/apd/users/${this.userProfile.id}/projects/${projectId}`).pipe(
       tap((response) => console.log(response)),
       catchError((error) => this.handleError(error, error.error))
     );
   }
 
-  addProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | {field:string, message:string}[]}> {
+  addProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | Errormessage[]}> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
@@ -50,7 +51,7 @@ export class ProjectService {
     );
   }
 
-  updateProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | {field:string, message:string}[]}> {
+  updateProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | Errormessage[]}> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
@@ -64,7 +65,7 @@ export class ProjectService {
     );
   }
 
-  deleteProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | {field:string, message:string}[]}> {
+  deleteProject(project: Project | JsonProject): Observable<{message: string, content:JsonProject | Errormessage[]}> {
     return this.http.delete<{message: string, content:JsonProject}>(`${this.url}/apd/users/${this.userProfile.id}/projects/${project.id}`).pipe(
       tap((response) => console.log(response),
       catchError((error) => this.handleError(error, error.error))

@@ -10,6 +10,7 @@ import { materials } from '../../../types/materials';
 import { singularities } from '../../../types/singularity';
 import { Singularity } from '../models/singularity.model';
 import { SingularityFactory } from '../models/singularityFactory';
+import { Errormessage } from '../../../types/error-message';
 
 @Injectable({
   providedIn: 'root'
@@ -23,21 +24,21 @@ export class DuctSectionService {
     private http: HttpClient,
   ) {}
 
-  getDuctSections(): Observable<{message: string, content:JsonDuctSection[] | {field:string, message:string}[]}> {
+  getDuctSections(): Observable<{message: string, content:JsonDuctSection[] | Errormessage[]}> {
     return this.http.get<{message: string, content: JsonDuctSection[]}>(`${this.url}/apd/ductnetworks/${this.ductNetwork.id}/ductsections`).pipe(
       tap(response => console.log(response)),
       catchError(error => this.handleError(error, error.error))
     );
   }
 
-  getDuctSectionById(ductSectionId: number): Observable<{message: string, content:JsonDuctSection | {field:string, message:string}[]}> {
+  getDuctSectionById(ductSectionId: number): Observable<{message: string, content:JsonDuctSection | Errormessage[]}> {
     return this.http.get<{message: string, content:JsonDuctSection}>(`${this.url}/apd/ductnetworks/${this.ductNetwork.id}/ductsections/${ductSectionId}`).pipe(
       tap(response => console.log(response)),
       catchError(error => this.handleError(error, error.error))
     );
   }
 
-  addDuctSection(ductSection: DuctSection | JsonDuctSection): Observable<{message: string, content:JsonDuctSection | {field:string, message:string}[]}> {
+  addDuctSection(ductSection: DuctSection | JsonDuctSection): Observable<{message: string, content:JsonDuctSection | Errormessage[]}> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
@@ -50,7 +51,7 @@ export class DuctSectionService {
     );
   }
 
-  updateDuctSection(ductSection: DuctSection | JsonDuctSection): Observable<{message: string, content:JsonDuctSection | {field:string, message:string}[]}> {
+  updateDuctSection(ductSection: DuctSection | JsonDuctSection): Observable<{message: string, content:JsonDuctSection | Errormessage[]}> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
@@ -63,14 +64,14 @@ export class DuctSectionService {
     );
   }
 
-  deleteDuctSection(ductSection: DuctSection | JsonDuctSection): Observable<{message: string, content:JsonDuctSection | {field:string, message:string}[]}> {
+  deleteDuctSection(ductSection: DuctSection | JsonDuctSection): Observable<{message: string, content:JsonDuctSection | Errormessage[]}> {
     return this.http.delete<{message: string, content:JsonDuctSection}>(`${this.url}/apd/ductnetworks/${this.ductNetwork.id}/ductsections/${ductSection.id}`).pipe(
       tap(response => console.log(response)),
       catchError(error => this.handleError(error, error.error))
     );
   }
 
-  private handleError(error: Error, errorValue: {message:string, content:{field:string, message:string}[]}) {
+  private handleError(error: Error, errorValue: {message:string, content:Errormessage[]}) {
     console.log(error);
     return of(errorValue);
   }

@@ -8,6 +8,7 @@ import { Air, JsonAir } from '../models/air.model';
 import { DuctSection, JsonDuctSection } from '../models/duct-section.model';
 import { DuctSectionService } from './duct-section.service';
 import { materials } from '../../../types/materials';
+import { Errormessage } from '../../../types/error-message';
 
 @Injectable({
   providedIn: 'root'
@@ -22,21 +23,21 @@ export class DuctNetworkService {
     private ductSectionService: DuctSectionService,
   ) {}
 
-  getDuctNetworks(): Observable<{message: string, content:JsonDuctNetwork[] | {field:string, message:string}[]}> {
+  getDuctNetworks(): Observable<{message: string, content:JsonDuctNetwork[] | Errormessage[]}> {
     return this.http.get<{message: string, content:JsonDuctNetwork[]}>(`${this.url}/apd/projects/${this.project.id}/ductnetworks`).pipe(
       tap((response) => console.log(response)),
       catchError((error) => this.handleError(error, error.error))
     );
   }
 
-  getDuctNetworkById(ductNetworkId: number): Observable<{message: string, content:JsonDuctNetwork | {field:string, message:string}[]}> {
+  getDuctNetworkById(ductNetworkId: number): Observable<{message: string, content:JsonDuctNetwork | Errormessage[]}> {
     return this.http.get<{message: string, content:JsonDuctNetwork}>(`${this.url}/apd/projects/${this.project.id}/ductnetworks/${ductNetworkId}`).pipe(
       tap((response) => console.log(response)),
       catchError((error) => this.handleError(error, error.error))
     );
   }
 
-  addDuctNetwork(ductNetwork: DuctNetwork | JsonDuctNetwork): Observable<{message: string, content:JsonDuctNetwork | {field: string, message: string}[]}> {
+  addDuctNetwork(ductNetwork: DuctNetwork | JsonDuctNetwork): Observable<{message: string, content:JsonDuctNetwork | Errormessage[]}> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
@@ -49,7 +50,7 @@ export class DuctNetworkService {
     );
   }
 
-  updateDuctNetwork(ductNetwork: DuctNetwork | JsonDuctNetwork): Observable<{message: string, content:JsonDuctNetwork | {field: string, message: string}[]}> {
+  updateDuctNetwork(ductNetwork: DuctNetwork | JsonDuctNetwork): Observable<{message: string, content:JsonDuctNetwork | Errormessage[]}> {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     }
@@ -62,7 +63,7 @@ export class DuctNetworkService {
     );
   }
 
-  deleteDuctNetwork(ductNetwork: DuctNetwork | JsonDuctNetwork): Observable<{message: string, content:JsonDuctNetwork | {field: string, message: string}[]}> {
+  deleteDuctNetwork(ductNetwork: DuctNetwork | JsonDuctNetwork): Observable<{message: string, content:JsonDuctNetwork | Errormessage[]}> {
     return this.http.delete<{message: string, content:JsonDuctNetwork}>(`${this.url}/apd/projects/${this.project.id}/ductnetworks/${ductNetwork.id}`).pipe(
       tap((response) => console.log(response)),
       catchError((error) => this.handleError(error, error.error))
@@ -135,7 +136,7 @@ export class DuctNetworkService {
     return ductNetwork;
   }
 
-  private handleError(error: Error, errorValue: {message:string, content:{field:string, message:string}[]}) {
+  private handleError(error: Error, errorValue: {message:string, content:Errormessage[]}) {
     console.log(error);
     return of(errorValue);
   }
