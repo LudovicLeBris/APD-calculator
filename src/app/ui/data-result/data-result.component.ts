@@ -11,26 +11,22 @@ import { Singularity } from '../../apd/shared/models/singularity.model';
   styleUrl: './data-result.component.css'
 })
 export class DataResultComponent implements OnInit {
-  dataResult: DataApd | Singularity | undefined;
-  @Input() type!: string;
+  @Input() data: DataApd | Singularity | undefined;
   name: string = '';
   icon: string = '';
   value: number | string | undefined;
   unit: string | undefined = '';
 
-  constructor(private dataType:DataTypesService) {}
-
   ngOnInit(): void {
-    this.dataResult = this.dataType.getTypes(this.type);
-    if (this.dataResult) {
-      this.name = this.dataResult.getName();
-      this.icon = this.dataResult.getIcon();
-      if (this.dataResult instanceof DataApd) {
-        this.unit = this.dataResult.getUnit();
-        this.value = this.dataResult.getValue();
-      } else if (this.dataResult instanceof Singularity) {
-        this.value = this.dataResult.getQuantity();
-      }
+    if (this.data) {
+      this.name = this.data.getName();
+      this.icon = this.data.getIcon();
+    }
+    if (this.data instanceof(DataApd)) {
+      this.unit = this.data.getUnit();
+      this.value = this.data.getValue();
+    } else if (this.data instanceof(Singularity)) {
+      this.value = this.data.getQuantity();
     }
   }
 }
