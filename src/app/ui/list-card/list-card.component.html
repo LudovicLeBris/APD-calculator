@@ -12,7 +12,10 @@
         <p>Pdc total : <span>{{ totalApd.getValue() }}</span> Pa</p>
       </div>
       <div>
-        <app-more-button></app-more-button>
+        <app-more-button
+          [url]="url"
+          [apdEntity]="ductData"
+        ></app-more-button>
       </div>
     </div>
   </div>

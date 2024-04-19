@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DuctNetwork } from '../../apd/shared/models/duct-network.model';
 import { Project } from '../../apd/shared/models/project.model';
 import { Router } from '@angular/router';
+import { DuctSection } from '../../apd/shared/models/duct-section.model';
 
 @Component({
   selector: 'app-more-button',
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class MoreButtonComponent {
   @Input() url: string = '';
-  @Input() apdEntity: Project | DuctNetwork | undefined;
+  @Input() apdEntity: Project | DuctNetwork | DuctSection | undefined;
 
   constructor(
     private router: Router,
