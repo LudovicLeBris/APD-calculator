@@ -26,7 +26,7 @@ export class ProjectListComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(data => {
-      console.log('check route resolver data');
+      console.log('check project resolver data');
       console.log(data);
     })
 
@@ -35,9 +35,9 @@ export class ProjectListComponent implements OnInit {
         localStorage.removeItem('projects');
         localStorage.setItem('projects', JSON.stringify(data.content));
         (JSON.parse(localStorage.getItem('projects')!) as JsonProject[]).forEach((jsonProject) => {
-          const project: Project = this.projectService.JsonToProject(jsonProject)
+          const project: Project = this.projectService.JsonToProject(jsonProject);
           this.projects.push(project);
-        })
+        });
       }
     })
   }
