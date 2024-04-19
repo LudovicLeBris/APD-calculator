@@ -15,7 +15,7 @@ export const routes: Routes = [
     resolve: {projects: projectsResolver}
   },
   {
-    path:'mes-projets/:id/sections',
+    path:'mes-projets/:id/reseaux',
     component: DuctNetworkListComponent,
   }
 ];
