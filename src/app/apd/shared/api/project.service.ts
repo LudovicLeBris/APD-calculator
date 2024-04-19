@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppUser } from '../../../types/user';
 import { environment } from '../../../../environments/environment';
-import { JsonProject, Project } from '../models/project.model';
+import { JsonProject, Project, StateProject } from '../models/project.model';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { DuctNetwork, JsonDuctNetwork } from '../models/duct-network.model';
 import { DuctNetworkService } from './duct-network.service';
@@ -112,6 +112,25 @@ export class ProjectService {
     project.userId = jsonProject.userId;
     project.generalAltitude.setValue(jsonProject.generalAltitude);
     project.generalTemperature.setValue(jsonProject.generalTemperature);
+    project.ductNetworks = ductNetworks;
+
+    return project;
+  }
+
+  stateToProject(stateProject: StateProject): Project {
+    const ductNetworks: DuctNetwork[] = [];
+
+    stateProject.ductNetworks.forEach(stateDuctNetwork => {
+      const ductNetwork = this.ductNetworkService.stateToDuctNetwork(stateDuctNetwork);
+      ductNetworks.push(ductNetwork);
+    });
+
+    const project = new Project;
+    project.id = stateProject.id;
+    project.name = stateProject.name;
+    project.userId = stateProject.userId;
+    project.generalAltitude.setValue(stateProject.generalAltitude.value);
+    project.generalTemperature.setValue(stateProject.generalTemperature.value);
     project.ductNetworks = ductNetworks;
 
     return project;

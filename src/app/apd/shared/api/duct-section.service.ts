@@ -3,7 +3,7 @@ import { DuctNetwork, JsonDuctNetwork } from '../models/duct-network.model';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, of, tap } from 'rxjs';
-import { DuctSection, JsonDuctSection } from '../models/duct-section.model';
+import { DuctSection, JsonDuctSection, StateDuctSection } from '../models/duct-section.model';
 import { Air, JsonAir } from '../models/air.model';
 import { diameters } from '../../../types/diameters';
 import { materials } from '../../../types/materials';
@@ -152,6 +152,47 @@ export class DuctSectionService {
     ductSection.linearApd.setValue(jsonDuctSection.linearApd);
     ductSection.singularApd.setValue(jsonDuctSection.singularApd);
     ductSection.totalApd.setValue(jsonDuctSection.totalApd);
+
+    return ductSection;
+  }
+
+  stateToDuctSection(stateDuctSection: StateDuctSection): DuctSection {
+    const air = new Air;
+    air.viscosity = stateDuctSection.air.viscosity;
+    air.density = stateDuctSection.air.density;
+    air.altitude.setValue(stateDuctSection.air.altitude.value);
+    air.temperature.setValue(stateDuctSection.air.temperature.value);
+
+    const singularities: Singularity[] = [];
+
+    stateDuctSection.singularities.forEach(stateSingularity => {
+      const singularity = (new SingularityFactory).createSingularity(stateSingularity.apiReference);
+      if (singularity) {
+        singularity.setQuantity(stateSingularity.quantity);
+        singularities.push(singularity);
+      }
+    });
+
+    const ductSection = new DuctSection;
+    ductSection.id = stateDuctSection.id;
+    ductSection.name = stateDuctSection.name;
+    ductSection.ductNetworkId = stateDuctSection.ductNetworkId;
+    ductSection.air = air;
+    ductSection.shape.setType(stateDuctSection.shape.type);
+    ductSection.diameter.setValue(stateDuctSection.diameter?.value as diameters);
+    ductSection.width.setValue(stateDuctSection.width?.value);
+    ductSection.height.setValue(stateDuctSection.height?.value);
+    ductSection.material.setValue(stateDuctSection.material.value as materials);
+    ductSection.flowrate.setValue(stateDuctSection.flowrate.value);
+    ductSection.length.setValue(stateDuctSection.length.value);
+    ductSection.singularities = singularities;
+    ductSection.additionalApd.setValue(stateDuctSection.additionalApd?.value);
+    ductSection.equivDiameter = (stateDuctSection.equivDiameter?.value as number);
+    ductSection.ductSectionsSection = (stateDuctSection.ductSectionsSection?.value as number);
+    ductSection.flowspeed.setValue(stateDuctSection.flowspeed?.value);
+    ductSection.linearApd.setValue(stateDuctSection.linearApd?.value);
+    ductSection.singularApd.setValue(stateDuctSection.singularApd?.value);
+    ductSection.totalApd.setValue(stateDuctSection.totalApd?.value);
 
     return ductSection;
   }

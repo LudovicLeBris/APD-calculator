@@ -3,7 +3,7 @@ import { Observable, catchError, of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from '../models/project.model';
-import { DuctNetwork, JsonDuctNetwork } from '../models/duct-network.model';
+import { DuctNetwork, JsonDuctNetwork, StateDuctNetwork } from '../models/duct-network.model';
 import { Air, JsonAir } from '../models/air.model';
 import { DuctSection, JsonDuctSection } from '../models/duct-section.model';
 import { DuctSectionService } from './duct-section.service';
@@ -68,6 +68,11 @@ export class DuctNetworkService {
       tap((response) => console.log(response)),
       catchError((error) => this.handleError(error, error.error))
     );
+  }
+
+  private handleError(error: Error, errorValue: {message:string, content:Errormessage[]}) {
+    console.log(error);
+    return of(errorValue);
   }
 
   ductNetworkToJson(ductNetwork: DuctNetwork) {
@@ -136,8 +141,36 @@ export class DuctNetworkService {
     return ductNetwork;
   }
 
-  private handleError(error: Error, errorValue: {message:string, content:Errormessage[]}) {
-    console.log(error);
-    return of(errorValue);
+  stateToDuctNetwork(stateDuctNetwork: StateDuctNetwork): DuctNetwork {
+    const air = new Air;
+    air.viscosity = stateDuctNetwork.air.viscosity;
+    air.density = stateDuctNetwork.air.density;
+    air.altitude.setValue(stateDuctNetwork.air.altitude.value);
+    air.temperature.setValue(stateDuctNetwork.air.temperature.value);
+
+    const ductSections: DuctSection[] = [];
+
+    stateDuctNetwork.ductSections.forEach(stateDuctSection => {
+      const ductSection = this.ductSectionService.stateToDuctSection(stateDuctSection);
+      ductSections.push(ductSection);
+    });
+
+    const ductNetwork = new DuctNetwork;
+    ductNetwork.id = stateDuctNetwork.id;
+    ductNetwork.name = stateDuctNetwork.name;
+    ductNetwork.projectId = stateDuctNetwork.projectId;
+    ductNetwork.air = air;
+    ductNetwork.altitude.setValue(stateDuctNetwork.altitude.value);
+    ductNetwork.temperature.setValue(stateDuctNetwork.temperature.value);
+    ductNetwork.generalMaterial.setValue(stateDuctNetwork.generalMaterial.value as materials);
+    ductNetwork.additionalApd.setValue(stateDuctNetwork.additionalApd?.value);
+    ductNetwork.ductSections = ductSections;
+    ductNetwork.totalLinearApd.setValue(stateDuctNetwork.totalLinearApd?.value);
+    ductNetwork.totalSingularApd.setValue(stateDuctNetwork.totalSingularApd?.value);
+    ductNetwork.totalAdditionalApd.setValue(stateDuctNetwork.totalAdditionalApd?.value);
+    ductNetwork.totalApd.setValue(stateDuctNetwork.totalApd?.value);
+
+    return ductNetwork;
   }
+
 }
