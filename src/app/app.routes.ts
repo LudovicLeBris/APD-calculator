@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { projectsResolver } from './shared/project-resolver.service';
 import { ProjectListComponent } from './apd/project-list/project-list.component';
 import { DuctNetworkListComponent } from './apd/duct-network-list/duct-network-list.component';
+import { DuctSectionListComponent } from './apd/duct-section-list/duct-section-list.component';
 
 export const routes: Routes = [
   {
@@ -15,7 +16,11 @@ export const routes: Routes = [
     resolve: {projects: projectsResolver}
   },
   {
-    path:'mes-projets/:id/reseaux',
+    path: 'mes-projets/:id/reseaux',
     component: DuctNetworkListComponent,
+  },
+  {
+    path: 'reseaux/:id/sections',
+    component: DuctSectionListComponent,
   }
 ];
