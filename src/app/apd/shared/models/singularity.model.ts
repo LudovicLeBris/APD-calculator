@@ -26,4 +26,9 @@ export abstract class Singularity {
   }
 }
 
-
+export interface StateSingularity {
+  apiReference: string,
+  name: string,
+  icon: string,
+  quantity: number
+}

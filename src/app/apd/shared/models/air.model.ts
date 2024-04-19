@@ -1,4 +1,5 @@
 import { Altitude } from "./altitude.model";
+import { StateDataApd } from "./data-apd.model";
 import { Temperature } from "./temperature.model";
 
 export class Air {
@@ -19,4 +20,11 @@ export interface JsonAir {
   density: number,
   temperature: number,
   altitude: number,
+}
+
+export interface StateAir {
+  viscosity: number,
+  density: number,
+  temperature : StateDataApd,
+  altitude: StateDataApd
 }

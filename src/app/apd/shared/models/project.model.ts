@@ -1,5 +1,6 @@
 import { Altitude } from "./altitude.model";
-import { DuctNetwork, JsonDuctNetwork } from "./duct-network.model";
+import { StateDataApd } from "./data-apd.model";
+import { DuctNetwork, JsonDuctNetwork, StateDuctNetwork } from "./duct-network.model";
 import { Temperature } from "./temperature.model";
 
 export class Project {
@@ -19,4 +20,13 @@ export interface JsonProject {
   generalAltitude: number,
   generalTemperature: number,
   ductNetworks: JsonDuctNetwork[]
+}
+
+export interface StateProject {
+  id?: number,
+  name: string,
+  userId?: number,
+  generalAltitude: StateDataApd,
+  generalTemperature: StateDataApd,
+  ductNetworks: StateDuctNetwork[]
 }

@@ -1,4 +1,4 @@
-import { DataApd } from "./data-apd.model";
+import { DataApd, StateDataApd } from "./data-apd.model";
 
 export class Shape extends DataApd {
 
@@ -31,4 +31,8 @@ export class Shape extends DataApd {
       this.setValue('Rectangulaire');
     }
   }
+}
+
+export interface stateShape extends StateDataApd{
+  type: 'circular' | 'rectangular';
 }

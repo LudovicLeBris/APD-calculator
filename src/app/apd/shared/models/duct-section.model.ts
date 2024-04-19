@@ -2,7 +2,8 @@ import { diameters } from "../../../types/diameters";
 import { materials } from "../../../types/materials";
 import { singularities } from "../../../types/singularity";
 import { AdditionalApd } from "./additional-apd.model";
-import { Air, JsonAir } from "./air.model";
+import { Air, JsonAir, StateAir } from "./air.model";
+import { StateDataApd } from "./data-apd.model";
 import { Diameter } from "./diameter.model";
 import { FlowRate } from "./flow-rate.model";
 import { FlowSpeed } from "./flow-speed.model";
@@ -10,9 +11,9 @@ import { Height } from "./height.model";
 import { Length } from "./length.model";
 import { LinearApd } from "./linear-apd.model";
 import { Material } from "./material.model";
-import { Shape } from "./shape.model";
+import { Shape, stateShape } from "./shape.model";
 import { SingularApd } from "./singular-apd.model";
-import { Singularity } from "./singularity.model";
+import { Singularity, StateSingularity } from "./singularity.model";
 import { TotalApd } from "./total-apd.model";
 import { Width } from "./width.model";
 
@@ -60,4 +61,26 @@ export interface JsonDuctSection {
   linearApd?: number | undefined,
   singularApd?: number | undefined,
   totalApd?: number | undefined
+}
+
+export interface StateDuctSection {
+  id?: number | undefined,
+  name: string,
+  ductNetworkId?: number | undefined,
+  air : StateAir,
+  shape: stateShape,
+  diameter?: StateDataApd,
+  width?: StateDataApd,
+  height?: StateDataApd,
+  material : StateDataApd,
+  flowrate: StateDataApd,
+  length: StateDataApd,
+  singularities: StateSingularity[],
+  additionalApd?: StateDataApd,
+  equivDiameter?: StateDataApd,
+  ductSectionsSection?: StateDataApd,
+  flowspeed?: StateDataApd,
+  linearApd?: StateDataApd,
+  singularApd?: StateDataApd,
+  totalApd?: StateDataApd
 }

@@ -1,8 +1,9 @@
 import { materials } from "../../../types/materials";
 import { AdditionalApd } from "./additional-apd.model";
-import { Air, JsonAir } from "./air.model";
+import { Air, JsonAir, StateAir } from "./air.model";
 import { Altitude } from "./altitude.model";
-import { DuctSection, JsonDuctSection } from "./duct-section.model";
+import { StateDataApd } from "./data-apd.model";
+import { DuctSection, JsonDuctSection, StateDuctSection } from "./duct-section.model";
 import { Material } from "./material.model";
 import { SingularApd } from "./singular-apd.model";
 import { Temperature } from "./temperature.model";
@@ -45,4 +46,20 @@ export interface JsonDuctNetwork {
   totalSingularApd?: number,
   totalAdditionalApd?: number,
   totalApd?: number
+}
+
+export interface StateDuctNetwork {
+  id?: number,
+  name: string,
+  projectId?: number,
+  air: StateAir,
+  altitude: StateDataApd,
+  temperature: StateDataApd,
+  generalMaterial: StateDataApd,
+  additionalApd?: StateDataApd,
+  ductSections: StateDuctSection[],
+  totalLinearApd?: StateDataApd,
+  totalSingularApd?: StateDataApd,
+  totalAdditionalApd?: StateDataApd,
+  totalApd?: StateDataApd
 }
