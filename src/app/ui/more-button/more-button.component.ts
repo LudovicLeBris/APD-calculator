@@ -18,14 +18,13 @@ import { DuctSection } from '../../apd/shared/models/duct-section.model';
   styleUrl: './more-button.component.css'
 })
 export class MoreButtonComponent {
-  @Input() url: string = '';
-  @Input() apdEntity: Project | DuctNetwork | DuctSection | undefined;
+  @Input() url: any[] = [''];
 
   constructor(
     private router: Router,
   ) {}
 
   goToUrl() {
-    this.router.navigate([this.url], {state: this.apdEntity})
+    this.router.navigate(this.url)
   }
 }

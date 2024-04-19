@@ -21,17 +21,17 @@ export class ListCardComponent implements OnInit {
   name: string = 'Test';
   material: Material = new Material;
   totalApd: TotalApd = new TotalApd;
-  url: string = '';
+  url: any[] = [''];
 
   ngOnInit(): void {
     this.name = this.ductData.name;
     this.totalApd = this.ductData.totalApd;
     if (this.ductData instanceof(DuctNetwork)) {
       this.material = this.ductData.generalMaterial;
-      this.url = `reseaux/${this.ductData.id}/sections`
+      this.url = [`reseaux`, this.ductData.id]
     } else if (this.ductData instanceof(DuctSection)) {
       this.material = this.ductData.material;
-      this.url = `reseaux/${this.ductData.ductNetworkId}/sections/${this.ductData.id}`
+      this.url = [`sections`, this.ductData.id]
     }
   }
 }

@@ -15,11 +15,13 @@ import { Router } from '@angular/router';
   styleUrl: './back-button.component.css'
 })
 export class BackButtonComponent {
+  @Input() url: any[] = [''];
+
   constructor(
     private router: Router,
   ) {}
 
   goBack() {
-    this.router.navigate(['..'])
+    this.router.navigate(this.url)
   }
 }

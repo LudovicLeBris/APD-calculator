@@ -16,11 +16,14 @@ export const routes: Routes = [
     resolve: {projects: projectsResolver}
   },
   {
-    path: 'mes-projets/:id/reseaux',
+    path: 'mes-projets/:projectId',
     component: DuctNetworkListComponent,
   },
   {
-    path: 'reseaux/:id/sections',
+    path: 'reseaux/:ductNetworkId',
     component: DuctSectionListComponent,
-  }
+  },
+  // {
+  //   path: 'sections/:ductSectionId',
+  // }
 ];
