@@ -8,16 +8,16 @@ import { DuctSectionDetailComponent } from './apd/duct-section-detail/duct-secti
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'mes-projets',
+    redirectTo: 'projets',
     pathMatch: 'full'
   },
   {
-    path: 'mes-projets',
+    path: 'projets',
     component: ProjectListComponent,
     resolve: {projects: projectsResolver},
   },
   {
-    path: 'mes-projets/:projectId',
+    path: 'projets/:projectId',
     component: DuctNetworkListComponent,
   },
   {
