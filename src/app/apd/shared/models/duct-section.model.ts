@@ -11,6 +11,7 @@ import { Height } from "./height.model";
 import { Length } from "./length.model";
 import { LinearApd } from "./linear-apd.model";
 import { Material } from "./material.model";
+import { Section } from "./section.model";
 import { Shape, stateShape } from "./shape.model";
 import { SingularApd } from "./singular-apd.model";
 import { Singularity, StateSingularity } from "./singularity.model";
@@ -33,7 +34,7 @@ export class DuctSection {
   singularities: Singularity[] = [];
   additionalApd: AdditionalApd = new AdditionalApd;
   equivDiameter: number = 0;
-  ductSectionsSection: number = 0;
+  ductSectionsSection: Section = new Section;
   flowspeed: FlowSpeed = new FlowSpeed;
   linearApd: LinearApd = new LinearApd;
   singularApd: SingularApd = new SingularApd;

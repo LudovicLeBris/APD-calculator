@@ -105,7 +105,7 @@ export class DuctSectionService {
       singularities : jsonSingularities,
       additionalApd: ductSection.additionalApd.getValue() as number,
       equivDiameter: ductSection.equivDiameter,
-      ductSectionsSection: ductSection.ductSectionsSection,
+      ductSectionsSection: ductSection.ductSectionsSection.getValue() as number,
       flowspeed: ductSection.flowspeed.getValue() as number,
       linearApd: ductSection.linearApd.getValue() as number,
       singularApd: ductSection.singularApd.getValue() as number,
@@ -147,7 +147,8 @@ export class DuctSectionService {
     ductSection.singularities = singularities;
     ductSection.additionalApd.setValue(jsonDuctSection.additionalApd);
     ductSection.equivDiameter = (jsonDuctSection.equivDiameter as number);
-    ductSection.ductSectionsSection = (jsonDuctSection.ductSectionsSection as number);
+    ductSection.equivDiameter = (jsonDuctSection.equivDiameter as number);
+    ductSection.ductSectionsSection.setValue(jsonDuctSection.ductSectionsSection as number);
     ductSection.flowspeed.setValue(jsonDuctSection.flowspeed);
     ductSection.linearApd.setValue(jsonDuctSection.linearApd);
     ductSection.singularApd.setValue(jsonDuctSection.singularApd);
@@ -188,7 +189,7 @@ export class DuctSectionService {
     ductSection.singularities = singularities;
     ductSection.additionalApd.setValue(stateDuctSection.additionalApd?.value);
     ductSection.equivDiameter = (stateDuctSection.equivDiameter?.value as number);
-    ductSection.ductSectionsSection = (stateDuctSection.ductSectionsSection?.value as number);
+    ductSection.ductSectionsSection.setValue(stateDuctSection.ductSectionsSection?.value as number);
     ductSection.flowspeed.setValue(stateDuctSection.flowspeed?.value);
     ductSection.linearApd.setValue(stateDuctSection.linearApd?.value);
     ductSection.singularApd.setValue(stateDuctSection.singularApd?.value);
