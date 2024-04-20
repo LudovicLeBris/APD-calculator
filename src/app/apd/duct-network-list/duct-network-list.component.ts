@@ -36,24 +36,19 @@ export class DuctNetworkListComponent implements OnInit {
 
   ngOnInit(): void {
     const projectId = this.route.snapshot.paramMap.get('projectId');
-    this.projectService.getProjectById(+projectId!).subscribe(response => {
-      if (response.message == "success") {
-        this.project = this.projectService.JsonToProject(response.content as JsonProject)
-        this.ductNetworkService.project = this.project;
-        this.ductNetworkService.getDuctNetworks().subscribe(data => {
-          if (data.message == "success") {
-            localStorage.removeItem('ductNetworks');
-            localStorage.setItem('ductNetworks', JSON.stringify(data.content));
-            (JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[]).forEach((jsonDuctNetwork) => {
-              const ductNetwork: DuctNetwork = this.ductNetworkService.jsonToDuctNetwork(jsonDuctNetwork);
-              this.ductNetworks.push(ductNetwork);
-            });
-          }
+    const jsonProject = (JSON.parse(localStorage.getItem('projects')!) as JsonProject[]).find(element => element.id == +projectId!)
+    this.project = this.projectService.JsonToProject(jsonProject!);
+    this.ductNetworkService.project = this.project;
+
+    this.ductNetworkService.getDuctNetworks().subscribe(data => {
+      if (data.message == "success") {
+        localStorage.removeItem('ductNetworks');
+        localStorage.setItem('ductNetworks', JSON.stringify(data.content));
+        (JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[]).forEach((jsonDuctNetwork) => {
+          const ductNetwork: DuctNetwork = this.ductNetworkService.jsonToDuctNetwork(jsonDuctNetwork);
+          this.ductNetworks.push(ductNetwork);
         });
       }
-    })
-
-
+    });
   }
 }
-// TODO : REFAIRE LE PASSAGE DES ENTITES DANS LES ROUTES AVEC LE QUERY PARAM :ID ET NON LE STATE

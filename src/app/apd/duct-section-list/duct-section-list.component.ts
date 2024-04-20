@@ -36,23 +36,19 @@ export class DuctSectionListComponent implements OnInit {
 
   ngOnInit(): void {
     const ductNetworkId = this.route.snapshot.paramMap.get('ductNetworkId');
-    this.ductNetworkService.getDuctNetworkById(+ductNetworkId!).subscribe(response => {
-      if (response.message == "success") {
-        this.ductNetwork = this.ductNetworkService.jsonToDuctNetwork(response.content as JsonDuctNetwork);
-        this.ductSectionService.ductNetwork = this.ductNetwork;
-        this.ductSectionService.getDuctSections().subscribe(data => {
-          if (data.message == "success") {
-            localStorage.removeItem('ductSections');
-            localStorage.setItem('ductSections', JSON.stringify(data.content));
-            (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]).forEach((jsonDuctSection) => {
-              const ductSection: DuctSection = this.ductSectionService.jsonToDuctSection(jsonDuctSection);
-              this.ductSections.push(ductSection);
-            });
-          }
+    const jsonDuctNetwork = (JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[]).find(element => element.id == +ductNetworkId!);
+    this.ductNetwork = this.ductNetworkService.jsonToDuctNetwork(jsonDuctNetwork!);
+    this.ductSectionService.ductNetwork = this.ductNetwork;
+
+    this.ductSectionService.getDuctSections().subscribe(data => {
+      if (data.message == "success") {
+        localStorage.removeItem('ductSections');
+        localStorage.setItem('ductSections', JSON.stringify(data.content));
+        (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]).forEach((jsonDuctSection) => {
+          const ductSection: DuctSection = this.ductSectionService.jsonToDuctSection(jsonDuctSection);
+          this.ductSections.push(ductSection);
         });
       }
     });
-
-
   }
 }
