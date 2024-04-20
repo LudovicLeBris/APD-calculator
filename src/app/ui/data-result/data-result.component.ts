@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataApd } from '../../apd/shared/models/data-apd.model';
 import { DataTypesService } from '../../apd/shared/data-types.service';
 import { Singularity } from '../../apd/shared/models/singularity.model';
+import { Material } from '../../apd/shared/models/material.model';
 
 @Component({
   selector: 'app-data-result',
@@ -24,7 +25,11 @@ export class DataResultComponent implements OnInit {
     }
     if (this.data instanceof(DataApd)) {
       this.unit = this.data.getUnit();
-      this.value = this.data.getValue();
+      if (this.data instanceof(Material)) {
+        this.value = this.data.getMaterialName();
+      } else {
+        this.value = this.data.getValue();
+      }
     } else if (this.data instanceof(Singularity)) {
       this.value = this.data.getQuantity();
     }
