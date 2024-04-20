@@ -20,7 +20,7 @@ export class Material extends DataApd {
   constructor() {
     super();
     this.apiReference = 'material';
-    this.name = 'Matériaux';
+    this.name = 'Matériau';
     this.icon = '/assets/images/Material.svg';
     this.value = 'galvanised_steel';
   }
