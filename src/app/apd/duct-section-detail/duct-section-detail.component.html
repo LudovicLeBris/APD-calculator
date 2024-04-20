@@ -1,0 +1,32 @@
+<section class="flex justify-between items-start m-2 border rounded-lg border-primary-light dark:border-primary-dark dark:text-bg-light">
+  <div>
+    <app-edit-button></app-edit-button>
+  </div>
+  <div class="p-2 flex flex-col gap-2">
+    <h1 class="text-center font-bold text-xl">{{ ductSection.name }}</h1>
+    <app-data-result [data]="ductSection.material"></app-data-result>
+  </div>
+  <div>
+    <app-back-button [url]="['reseaux' , ductNetwork.id]"></app-back-button>
+  </div>
+</section>
+<section class="flex flex-col gap-4 m-2 mb-4 dark:text-bg-light">
+  <app-data-result class="font-bold underline" [data]="ductSection.totalApd"></app-data-result>
+  <app-data-result class="font-semibold" [data]="ductSection.linearApd"></app-data-result>
+  <app-data-result class="font-semibold" [data]="ductSection.singularApd"></app-data-result>
+  <app-data-result [data]="ductSection.additionalApd"></app-data-result>
+  <app-data-result [data]="ductSection.flowrate"></app-data-result>
+  <app-data-result [data]="ductSection.shape"></app-data-result>
+  @if (ductSection.shape.getType() == 'circular') {
+    <app-data-result [data]="ductSection.diameter"></app-data-result>
+  } @else {
+    <app-data-result [data]="ductSection.width"></app-data-result>
+    <app-data-result [data]="ductSection.height"></app-data-result>
+  }
+  <app-data-result [data]="ductSection.ductSectionsSection"></app-data-result>
+  <app-data-result [data]="ductSection.flowspeed"></app-data-result>
+  <app-data-result [data]="ductSection.length"></app-data-result>
+  @for (singularity of ductSection.singularities; track $index) {
+    <app-data-result [data]="singularity"></app-data-result>
+  }
+</section>
