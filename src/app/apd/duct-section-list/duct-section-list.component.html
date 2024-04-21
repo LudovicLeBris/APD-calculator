@@ -19,5 +19,9 @@
   }
 </section>
 <div class="relative">
-  <app-add-button class="fixed bottom-8 right-8"></app-add-button>
+  <app-add-button
+    class="fixed bottom-8 right-8"
+    [parentId]="ductNetwork.id"
+    entityType="ductSection"
+  ></app-add-button>
 </div>
