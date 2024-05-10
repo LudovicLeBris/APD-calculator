@@ -4,12 +4,14 @@ import { DuctNetwork, JsonDuctNetwork } from '../shared/models/duct-network.mode
 import { ActivatedRoute } from '@angular/router';
 import { DuctNetworkService } from '../shared/api/duct-network.service';
 import { BackButtonComponent } from '../../ui/back-button/back-button.component';
+import { DuctSectionFormComponent } from '../duct-section-form/duct-section-form.component';
 
 @Component({
   selector: 'app-duct-section-add',
   standalone: true,
   imports: [
-    BackButtonComponent
+    BackButtonComponent,
+    DuctSectionFormComponent,
   ],
   template: `
     <section class="flex justify-between items-start m-2 border rounded-lg border-primary-light dark:border-primary-dark dark:text-bg-light">
@@ -21,6 +23,9 @@ import { BackButtonComponent } from '../../ui/back-button/back-button.component'
       <div>
         <app-back-button [url]="['reseaux', ductNetwork.id]"></app-back-button>
       </div>
+    </section>
+    <section class="flex flex-col gap-2 m-2">
+      <app-duct-section-form [ductSection]="ductSection" [ductNetwork]="ductNetwork"></app-duct-section-form>
     </section>
   `,
   styleUrl: './duct-section-add.component.css'
