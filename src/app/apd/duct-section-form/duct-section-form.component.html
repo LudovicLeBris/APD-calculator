@@ -171,7 +171,7 @@
     >
       <img src={{ductSection.width.getIcon()}} alt="icon representing the width of a rectangle" class="size-6">
       <input
-        (keyup)="calculateSection(); calculateFlowspeed()"
+        (change)="calculateSection(); calculateFlowspeed()"
         formControlName="width"
         class="w-full"
         type="number"
@@ -200,7 +200,7 @@
     >
       <img src={{ductSection.height.getIcon()}} alt="icon representing the height of a rectangle" class="size-6">
       <input
-        (keyup)="calculateSection(); calculateFlowspeed()"
+        (change)="calculateSection(); calculateFlowspeed()"
         formControlName="height"
         class="w-full"
         type="number"

@@ -61,6 +61,9 @@ export class DuctSectionFormComponent implements OnInit {
 
     if (this.isAddForm) {
       this.material = this.ductNetwork.generalMaterial;
+      this.form.get('diameter')?.setValue('');
+      this.form.get('width')?.setValue('');
+      this.form.get('height')?.setValue('');
     } else {
       this.name = this.ductSection.name;
       this.material = this.ductSection.material;
@@ -91,9 +94,23 @@ export class DuctSectionFormComponent implements OnInit {
       additionalApd: [this.additionalApd.getValue(), [Validators.min(1)]]
     });
     this.form.get('material')?.disable();
-    this.form.get('diameter')?.setValue('');
-    this.form.get('width')?.setValue('');
-    this.form.get('height')?.setValue('');
+    this.form.get('singularities')?.setValue('');
+
+    if (this.shape == 'rectangular') {
+      this.form.get('width')?.setValidators([Validators.required, Validators.min(1)]);
+      this.form.get('width')?.updateValueAndValidity();
+      this.form.get('height')?.setValidators([Validators.required, Validators.min(1)]);
+      this.form.get('height')?.updateValueAndValidity();
+      this.form.get('diameter')?.setValidators([]);
+      this.form.get('diameter')?.updateValueAndValidity();
+      this.form.get('diameter')?.setValue('');
+      this.form.get('diameter')?.markAsPristine();
+    }
+
+    if (this.additionalApd.getValue() == 0) {
+      this.form.get('additionalApd')?.setValue('');
+    }
+
   }
 
   onSubmit() {
@@ -123,18 +140,20 @@ export class DuctSectionFormComponent implements OnInit {
       //   }
       // });
     } else {
-      console.log('Update', this.ductSection);
+      this.ductSectionService.updateDuctSection(this.ductSection).subscribe((response) => {
+        if (response.message == "success") {
+          console.log('Duct section updated');
+        }
+      });
 
-      // this.ductSectionService.updateDuctSection(this.ductSection).subscribe((response) => {
-      //   if (response.message == "success") {
-      //     const ductSection = response.content as JsonDuctSection;
-      //     let ductSections = (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]);
-      //     ductSections.push(ductSection);
-      //     localStorage.removeItem('ductSections');
-      //     localStorage.setItem('ductSections', JSON.stringify(ductSections));
-      //     this.router.navigate(['sections', ductSection.id]);
-      //   }
-      // });
+      let ductSections = (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]);
+      const ductSectionIndexInlocalStorage = ductSections.findIndex(element => element.id == this.ductSection.id);
+      ductSections.splice(ductSectionIndexInlocalStorage, 1);
+      ductSections.splice(ductSectionIndexInlocalStorage, 0, this.ductSectionService.ductSectionToJson(this.ductSection));
+      localStorage.removeItem('ductSections');
+      localStorage.setItem('ductSections', JSON.stringify(ductSections));
+
+      this.router.navigate(['sections', this.ductSection.id]);
     }
   }
 
@@ -189,7 +208,7 @@ export class DuctSectionFormComponent implements OnInit {
   }
 
   calculateFlowspeed() {
-    if (this.form.get('flowrate')?.dirty) {
+    if (this.form.get('flowrate')?.dirty || this.form.get('diameter')?.dirty || this.form.get('width')?.dirty || this.form.get('height')?.dirty) {
       this.flowspeed = +((this.form.get('flowrate')?.value / 3600) / this.section).toFixed(2);
 
       this.form.get('flowspeed')?.setValue(this.flowspeed);
@@ -229,4 +248,5 @@ export class DuctSectionFormComponent implements OnInit {
       this.removeSingularity(index);
     }
   }
+
 }

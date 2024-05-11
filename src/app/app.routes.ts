@@ -5,6 +5,7 @@ import { DuctNetworkListComponent } from './apd/duct-network-list/duct-network-l
 import { DuctSectionListComponent } from './apd/duct-section-list/duct-section-list.component';
 import { DuctSectionDetailComponent } from './apd/duct-section-detail/duct-section-detail.component';
 import { DuctSectionAddComponent } from './apd/duct-section-add/duct-section-add.component';
+import { DuctSectionUpdateComponent } from './apd/duct-section-update/duct-section-update.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,9 @@ export const routes: Routes = [
   },
   {
     path: 'sections/ajouter', component: DuctSectionAddComponent
+  },
+  {
+    path: 'sections/modifier', component: DuctSectionUpdateComponent
   },
   {
     path: 'sections/:ductSectionId',

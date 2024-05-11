@@ -18,6 +18,7 @@ import { DuctSection } from '../../apd/shared/models/duct-section.model';
 })
 export class ListCardComponent implements OnInit {
   @Input() ductData!: DuctNetwork | DuctSection;
+  parentId: number | undefined;
   name: string = 'Test';
   material: Material = new Material;
   totalApd: TotalApd = new TotalApd;
@@ -27,9 +28,11 @@ export class ListCardComponent implements OnInit {
     this.name = this.ductData.name;
     this.totalApd = this.ductData.totalApd;
     if (this.ductData instanceof(DuctNetwork)) {
+      this.parentId = this.ductData.projectId;
       this.material = this.ductData.generalMaterial;
       this.url = [`reseaux`, this.ductData.id]
     } else if (this.ductData instanceof(DuctSection)) {
+      this.parentId = this.ductData.ductNetworkId;
       this.material = this.ductData.material;
       this.url = [`sections`, this.ductData.id]
     }

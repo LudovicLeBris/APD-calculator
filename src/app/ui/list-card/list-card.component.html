@@ -1,6 +1,11 @@
 <div class="h-16 w-full flex items-center gap-2 p-1 rounded-lg bg-gradient-light dark:bg-gradient-dark dark:text-bg-light">
   <div>
-    <app-edit-button [variant]=true></app-edit-button>
+    <app-edit-button
+      [variant]=true
+      [parentId]="parentId"
+      entityType="ductSection"
+      [entityId]="ductData.id"
+    ></app-edit-button>
   </div>
   <div class="flex flex-col flex-grow">
     <div class="flex-grow text-center font-semibold ">
