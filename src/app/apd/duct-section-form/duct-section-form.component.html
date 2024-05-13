@@ -390,7 +390,7 @@
     [disabled]="form.invalid"
     type="submit"
     class="mt-2 p-2 rounded-md bg-primary-light dark:bg-primary-dark dark:text-bg-light font-semibold"
-    [ngClass]="{'bg-warning-light dark:bg-warning-dark text-tertiary-light dark:text-tertiary-dark': form.invalid}"
+    [ngClass]="{'bg-warning-light dark:bg-warning-dark text-tertiary-light dark:text-tertiary-dark cursor-not-allowed': form.invalid}"
   >
   @if (isAddForm) {
     Ajoutez la section de gaine
