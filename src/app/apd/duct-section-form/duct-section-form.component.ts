@@ -61,9 +61,6 @@ export class DuctSectionFormComponent implements OnInit {
 
     if (this.isAddForm) {
       this.material = this.ductNetwork.generalMaterial;
-      this.form.get('diameter')?.setValue('');
-      this.form.get('width')?.setValue('');
-      this.form.get('height')?.setValue('');
     } else {
       this.name = this.ductSection.name;
       this.material = this.ductSection.material;
@@ -96,6 +93,12 @@ export class DuctSectionFormComponent implements OnInit {
     this.form.get('material')?.disable();
     this.form.get('singularities')?.setValue('');
 
+    if (this.isAddForm) {
+      this.form.get('diameter')?.setValue('');
+      this.form.get('width')?.setValue('');
+      this.form.get('height')?.setValue('');
+    }
+
     if (this.shape == 'rectangular') {
       this.form.get('width')?.setValidators([Validators.required, Validators.min(1)]);
       this.form.get('width')?.updateValueAndValidity();
@@ -127,18 +130,17 @@ export class DuctSectionFormComponent implements OnInit {
     });
     this.ductSection.additionalApd.setValue(+this.form.get('additionalApd')?.value);
     if (this.isAddForm) {
-      console.log('Add', this.ductSection);
-
-      // this.ductSectionService.addDuctSection(this.ductSection).subscribe((response) => {
-      //   if (response.message == "success") {
-      //     const ductSection = response.content as JsonDuctSection;
-      //     let ductSections = (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]);
-      //     ductSections.push(ductSection);
-      //     localStorage.removeItem('ductSections');
-      //     localStorage.setItem('ductSections', JSON.stringify(ductSections));
-      //     this.router.navigate(['sections', ductSection.id]);
-      //   }
-      // });
+      this.ductSectionService.addDuctSection(this.ductSection).subscribe((response) => {
+        if (response.message == "success") {
+          console.log('Duct section added');
+          const ductSection = response.content as JsonDuctSection;
+          let ductSections = (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]);
+          ductSections.push(ductSection);
+          localStorage.removeItem('ductSections');
+          localStorage.setItem('ductSections', JSON.stringify(ductSections));
+          this.router.navigate(['sections', ductSection.id]);
+        }
+      });
     } else {
       this.ductSectionService.updateDuctSection(this.ductSection).subscribe((response) => {
         if (response.message == "success") {
