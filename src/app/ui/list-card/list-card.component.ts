@@ -5,6 +5,7 @@ import { Material } from '../../apd/shared/models/material.model';
 import { TotalApd } from '../../apd/shared/models/total-apd.model';
 import { DuctNetwork } from '../../apd/shared/models/duct-network.model';
 import { DuctSection } from '../../apd/shared/models/duct-section.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-card',
@@ -24,6 +25,10 @@ export class ListCardComponent implements OnInit {
   totalApd: TotalApd = new TotalApd;
   url: any[] = [''];
 
+  constructor (
+    private router: Router,
+  ) {}
+
   ngOnInit(): void {
     this.name = this.ductData.name;
     this.totalApd = this.ductData.totalApd;
@@ -36,5 +41,9 @@ export class ListCardComponent implements OnInit {
       this.material = this.ductData.material;
       this.url = [`sections`, this.ductData.id]
     }
+  }
+
+  goToEntity():void {
+    this.router.navigate(this.url);
   }
 }

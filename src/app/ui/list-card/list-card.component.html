@@ -1,6 +1,7 @@
-<div class="h-16 w-full flex items-center gap-2 p-1 rounded-lg bg-gradient-light dark:bg-gradient-dark dark:text-bg-light">
+<div (click)="goToEntity()" class="h-16 w-full flex items-center gap-2 p-1 rounded-lg bg-gradient-light dark:bg-gradient-dark dark:text-bg-light cursor-pointer">
   <div>
     <app-edit-button
+      class="z-10"
       [variant]=true
       [parentId]="parentId"
       entityType="ductSection"
@@ -18,7 +19,8 @@
       </div>
       <div>
         <app-more-button
-          [url]="url"
+          class="z-10"
+          (click)="goToEntity()"
         ></app-more-button>
       </div>
     </div>
