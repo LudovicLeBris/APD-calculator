@@ -1,10 +1,10 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form" class="flex flex-col gap-2">
 
   <!-- duct section name -->
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class="dark:text-bg-light ">
     <label for="name" >Nom de la section</label>
     <div
-      class="flex gap-2 items-center w-full p-2 input-container"
+      class="flex gap-2 items-center w-full p-2 input-container "
       [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('name')!.errors && form.get('name')!.touched}"
     >
       <input
@@ -18,7 +18,7 @@
       >
     </div>
     @if (form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) {
-      <div class="text-sm text-bg-dark dark:text-bg-light">
+      <div class="text-sm  dark:text-bg-light">
         @if (form.get('name')!.errors!['required']) {
           <p>Un nom est requis.</p>
         }
@@ -30,7 +30,7 @@
   </div>
 
   <!-- duct section material -->
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class="dark:text-bg-light">
     <label for="material">{{ ductSection.material.getName() }}</label>
     <div class="flex gap-2 items-center">
       <div class="flex gap-2 items-center w-full p-2 input-container" [ngClass]="{'bg-surface-light hover:border':!isMaterialEnable}">
@@ -60,7 +60,7 @@
   </div>
 
   <!-- duct section flow rate -->
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class="dark:text-bg-light">
     <label for="flowrate">{{ductSection.flowrate.getName()}} ({{ductSection.flowrate.getUnit()}})</label>
     <div
       class="flex gap-2 items-center w-full p-2 input-container"
@@ -80,7 +80,7 @@
       >
     </div>
     @if (form.get('flowrate')?.invalid && (form.get('flowrate')?.dirty || form.get('flowrate')?.touched)) {
-      <div class="text-sm text-bg-dark dark:text-bg-light">
+      <div class="text-sm dark:text-bg-light">
         @if (form.get('flowrate')!.errors!['required']) {
           <p>Le débit est requis.</p>
         }
@@ -95,7 +95,7 @@
   </div>
 
   <!-- duct section shape -->
-  <div class="text-bg-dark dark:text-bg-light flex justify-around items-center">
+  <div class="dark:text-bg-light flex justify-around items-center">
     <div class="flex flex-col gap-1 justify-center items-center">
       <div class="flex gap-2">
         <input
@@ -134,7 +134,7 @@
   </div>
 
 @if (shape === 'circular') {
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class="dark:text-bg-light">
     <label for="diameter">{{ductSection.diameter.getName()}} ({{ductSection.diameter.getUnit()}})</label>
     <div
       class="flex gap-2 items-center w-full p-2 input-container"
@@ -155,7 +155,7 @@
       </select>
     </div>
     @if (form.get('diameter')?.invalid && (form.get('diameter')?.dirty || form.get('diameter')?.touched)) {
-      <div class="text-sm text-bg-dark dark:text-bg-light">
+      <div class="text-sm  dark:text-bg-light">
         @if (form.get('diameter')!.errors!['required']) {
           <p>Un diamètre est requis.</p>
         }
@@ -163,7 +163,7 @@
     }
   </div>
 } @else if (shape === 'rectangular') {
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class=" dark:text-bg-light">
     <label for="width">{{ductSection.width.getName()}} ({{ductSection.width.getUnit()}})</label>
     <div
       class="flex gap-2 items-center w-full p-2 input-container"
@@ -182,7 +182,7 @@
       >
     </div>
     @if (form.get('width')?.invalid && (form.get('width')?.dirty || form.get('width')?.touched)) {
-      <div class="text-sm text-bg-dark dark:text-bg-light">
+      <div class="text-sm  dark:text-bg-light">
         @if (form.get('width')!.errors!['required']) {
           <p>La largeur de la gaine est requise.</p>
         }
@@ -192,7 +192,7 @@
       </div>
     }
   </div>
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class=" dark:text-bg-light">
     <label for="height">{{ductSection.height.getName()}} ({{ductSection.height.getUnit()}})</label>
     <div
       class="flex gap-2 items-center w-full p-2 input-container"
@@ -212,7 +212,7 @@
       >
     </div>
     @if (form.get('height')?.invalid && (form.get('height')?.dirty || form.get('height')?.touched)) {
-      <div class="text-sm text-bg-dark dark:text-bg-light">
+      <div class="text-sm  dark:text-bg-light">
         @if (form.get('height')!.errors!['required']) {
           <p>La hauteur de la gaine est requise.</p>
         }
@@ -227,7 +227,7 @@
   <div class="flex flex-col justify-center">
     <div class="flex gap-2">
       <!-- section's section -->
-      <div class="text-bg-dark dark:text-bg-light w-1/2">
+      <div class="dark:text-bg-light w-1/2">
         <label for="section">{{ductSection.ductSectionsSection.getName()}} ({{ductSection.ductSectionsSection.getUnit()}})</label>
         <div
           class="flex gap-2 items-center border rounded-md border-primary-light w-full p-2 dark:border-primary-dark bg-surface-light"
@@ -245,7 +245,7 @@
         </div>
       </div>
       <!-- flowspeed -->
-      <div class="text-bg-dark dark:text-bg-light w-1/2">
+      <div class="dark:text-bg-light w-1/2">
         <label for="flowspeed">{{ductSection.flowspeed.getName()}} ({{ductSection.flowspeed.getUnit()}})</label>
         <div
           class="flex gap-2 items-center border rounded-md border-primary-light w-full p-2 dark:border-primary-dark bg-surface-light"
@@ -264,7 +264,7 @@
       </div>
     </div>
     @if (flowspeed > 7 && flowspeed !== 1/0) {
-      <div class="text-sm text-bg-dark dark:text-bg-light">
+      <div class="text-sm dark:text-bg-light">
         @if (flowspeed > 12) {
           <p>La vitesse dans la gaine est beaucoup trop rapide :</p>
         }
@@ -277,7 +277,7 @@
   </div>
 
   <!-- length -->
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class="dark:text-bg-light">
     <label for="length">{{ductSection.length.getName()}} ({{ductSection.length.getUnit()}})</label>
     <div
       class="flex gap-2 items-center w-full p-2 input-container"
@@ -296,7 +296,7 @@
       >
     </div>
     @if (form.get('length')?.invalid && (form.get('length')?.dirty || form.get('length')?.touched)) {
-      <div class="text-sm text-bg-dark dark:text-bg-light">
+      <div class="text-sm dark:text-bg-light">
         @if (form.get('length')!.errors!['required']) {
           <p>La longueur de la gaine est requise.</p>
         }
@@ -308,7 +308,7 @@
   </div>
 
   <!-- singularities -->
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class="dark:text-bg-light">
     <label for="singularity">Singularités</label>
     <div class="flex gap-2 items-center">
       <div class="flex gap-2 items-center w-full p-2 input-container">
@@ -361,7 +361,7 @@
   }
 
   <!-- additional apd -->
-  <div class="text-bg-dark dark:text-bg-light">
+  <div class="dark:text-bg-light">
     <label for="additionalApd">{{ductSection.additionalApd.getName()}} ({{ductSection.additionalApd.getUnit()}})</label>
     <div
       class="flex gap-2 items-center w-full p-2 input-container"
@@ -378,7 +378,7 @@
       >
     </div>
     @if (form.get('additionalApd')?.invalid && (form.get('additionalApd')?.dirty || form.get('additionalApd')?.touched)) {
-      <div class="text-sm text-bg-dark dark:text-bg-light">
+      <div class="text-sm dark:text-bg-light">
         @if (form.get('additionalApd')!.errors!['min']) {
           <p>Les PdC additionnelles doivent être un nombre positif supérieur à 0.</p>
         }
@@ -399,6 +399,6 @@
   }
   </button>
   @if (form.invalid) {
-    <p class="mb-2 text-center text-sm text-bg-dark dark:text-bg-light">Il reste des champs invalides ou incomplets</p>
+    <p class="mb-2 text-center text-sm dark:text-bg-light">Il reste des champs invalides ou incomplets</p>
   }
 </form>
