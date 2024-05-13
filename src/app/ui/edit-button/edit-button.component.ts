@@ -1,8 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Project } from '../../apd/shared/models/project.model';
-import { DuctNetwork } from '../../apd/shared/models/duct-network.model';
-import { DuctSection } from '../../apd/shared/models/duct-section.model';
 
 @Component({
   selector: 'app-edit-button',
