@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input-container {
+    @apply border rounded-md border-primary-light dark:border-primary-dark hover:outline hover:outline-primary-light hover:dark:outline-primary-dark;
+  }
+}

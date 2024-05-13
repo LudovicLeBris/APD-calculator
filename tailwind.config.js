@@ -54,12 +54,11 @@ module.exports = {
         '.btn-primary-light': {
           backgroundColor: '#2EA0FF',
           color: 'black',
-          border: '0',
           '&:hover': {
-            border: '1px solid #146CE1',
+            outline: '1px solid #146CE1',
           },
           '&:active' : {
-            border: '1px solid #1756B6',
+            outline: '1px solid #1756B6',
             boxShadow: 'rgba(23, 86, 182, 0.75) 0px 2px 10px'
           }
         },
@@ -67,22 +66,21 @@ module.exports = {
           backgroundColor: '#146CE1',
           color: 'white',
           '&:hover': {
-            border: '1px solid #1B83F5',
+            outline: '1px solid #1B83F5',
           },
           '&:active' : {
-            border: '1px solid #2EA0FF',
+            outline: '1px solid #2EA0FF',
             boxShadow: 'rgba(46, 160, 255, 0.75) 0px 2px 10px'
             }
         },
         '.btn-secondary-light': {
           backgroundColor: '#1756B6',
           color: 'white',
-          border: '0',
           '&:hover': {
-            border: '1px solid #146CE1',
+            outline: '1px solid #146CE1',
           },
           '&:active' : {
-            border: '1px solid #2EA0FF',
+            outline: '1px solid #2EA0FF',
             boxShadow: 'rgba(46, 160, 255, 0.75) 0px 2px 10px'
           }
         },
@@ -90,22 +88,21 @@ module.exports = {
           backgroundColor: '#1B83F5',
           color: 'black',
           '&:hover': {
-            border: '1px solid #146CE1',
+            outline: '1px solid #146CE1',
           },
           '&:active' : {
-            border: '1px solid #2EA0FF',
+            outline: '1px solid #2EA0FF',
             boxShadow: 'rgba(46, 160, 255, 0.75) 0px 2px 10px'
             }
         },
         '.btn-tertiary-light': {
           backgroundColor: '#D9F0FF',
           color: 'black',
-          border: '0',
           '&:hover': {
-            border: '1px solid #2EA0FF',
+            outline: '1px solid #2EA0FF',
           },
           '&:active' : {
-            border: '1px solid #146CE1',
+            outline: '1px solid #146CE1',
             boxShadow: 'rgba(20, 108, 225, 0.75) 0px 2px 10px'
           }
         },
@@ -113,10 +110,10 @@ module.exports = {
           backgroundColor: '#1756B6',
           color: 'white',
           '&:hover': {
-            border: '1px solid #146CE1',
+            outline: '1px solid #146CE1',
           },
           '&:active' : {
-            border: '1px solid #1B83F5',
+            outline: '1px solid #1B83F5',
             boxShadow: 'rgba(27, 131, 245, 0.75) 0px 2px 10px'
             }
         },
@@ -124,10 +121,10 @@ module.exports = {
           backgroundColor: '#FF352E',
           color: 'dark',
           '&:hover': {
-            border: '1px solid #E02914',
+            outline: '1px solid #E02914',
           },
           '&:active' : {
-            border: '1px solid #BC2914',
+            outline: '1px solid #BC2914',
             boxShadow: 'rgba(188, 41, 20, 0.75) 0px 2px 10px'
             }
         },
@@ -135,10 +132,10 @@ module.exports = {
           backgroundColor: '#E02914',
           color: 'dark',
           '&:hover': {
-            border: '1px solid #FF352E',
+            outline: '1px solid #FF352E',
           },
           '&:active' : {
-            border: '1px solid #FF0801',
+            outline: '1px solid #FF0801',
             boxShadow: 'rgba(255, 8, 1, 0.75) 0px 2px 10px'
             }
         },
