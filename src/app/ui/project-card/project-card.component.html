@@ -1,6 +1,6 @@
-<div class="size-40 flex flex-col justify-around p-1 rounded-lg bg-gradient-light dark:bg-gradient-dark dark:text-bg-light">
+<div (click)="goToProject()" class="size-40 flex flex-col justify-around p-1 rounded-lg bg-gradient-light dark:bg-gradient-dark dark:text-bg-light">
   <div class="flex justify-between items-center">
-    <div>
+    <div class="z-10">
       <app-edit-button [variant]=true></app-edit-button>
     </div>
     <div class="flex-grow text-center font-semibold px-1">
@@ -12,7 +12,7 @@
     <p>Altitude : <span>{{ altitude }}</span> m</p>
     <p>Température : <span>{{ temperature }}</span> °C</p>
   </div>
-  <div class="flex justify-center">
-    <app-more-button [url]="['projets', project.id]"></app-more-button>
+  <div class="flex justify-center z-10">
+    <app-more-button (click)="goToProject()"></app-more-button>
   </div>
 </div>
