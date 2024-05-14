@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { DuctSection, JsonDuctSection } from '../shared/models/duct-section.model';
 import { DuctSectionService } from '../shared/api/duct-section.service';
 import { Router } from '@angular/router';
-import { DuctNetwork } from '../shared/models/duct-network.model';
+import { DuctNetwork, JsonDuctNetwork } from '../shared/models/duct-network.model';
 import { diameters, diametersList } from '../../types/diameters';
 import { singularityList } from '../../types/singularity';
 import { Singularity } from '../shared/models/singularity.model';
@@ -145,17 +145,18 @@ export class DuctSectionFormComponent implements OnInit {
       this.ductSectionService.updateDuctSection(this.ductSection).subscribe((response) => {
         if (response.message == "success") {
           console.log('Duct section updated');
+          this.ductSection = this.ductSectionService.jsonToDuctSection(response.content as JsonDuctSection);
+          let ductSections = (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]);
+          const ductSectionIndexInlocalStorage = ductSections.findIndex(element => element.id == this.ductSection.id);
+          ductSections.splice(ductSectionIndexInlocalStorage, 1);
+          ductSections.splice(ductSectionIndexInlocalStorage, 0, this.ductSectionService.ductSectionToJson(this.ductSection));
+          localStorage.removeItem('ductSections');
+          localStorage.setItem('ductSections', JSON.stringify(ductSections));
+
+          this.router.navigate(['sections', this.ductSection.id]);
         }
       });
 
-      let ductSections = (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]);
-      const ductSectionIndexInlocalStorage = ductSections.findIndex(element => element.id == this.ductSection.id);
-      ductSections.splice(ductSectionIndexInlocalStorage, 1);
-      ductSections.splice(ductSectionIndexInlocalStorage, 0, this.ductSectionService.ductSectionToJson(this.ductSection));
-      localStorage.removeItem('ductSections');
-      localStorage.setItem('ductSections', JSON.stringify(ductSections));
-
-      this.router.navigate(['sections', this.ductSection.id]);
     }
   }
 
