@@ -24,9 +24,9 @@ export class AddButtonComponent {
 
   goToAddEntity(): void {
     if (this.entityType == 'project') {
-      this.router.navigate(['projets/ajouter', {userId: this.parentId}])
+      this.router.navigate(['projets/ajouter'], {queryParams: {userId: this.parentId}})
     } else if (this.entityType == 'ductNetwork') {
-      this.router.navigate(['reseaux/ajouter', {projectId: this.parentId}])
+      this.router.navigate(['reseaux/ajouter'], {queryParams: {projectId: this.parentId}})
     } else if (this.entityType == 'ductSection') {
       this.router.navigate([`sections/ajouter`], {queryParams: {ductNetworkId: this.parentId}})
     }
