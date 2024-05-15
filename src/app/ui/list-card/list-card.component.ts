@@ -24,6 +24,7 @@ export class ListCardComponent implements OnInit {
   material: Material = new Material;
   totalApd: TotalApd = new TotalApd;
   url: any[] = [''];
+  entityType: 'ductNetwork' | 'ductSection' | undefined;
 
   constructor (
     private router: Router,
@@ -35,11 +36,13 @@ export class ListCardComponent implements OnInit {
     if (this.ductData instanceof(DuctNetwork)) {
       this.parentId = this.ductData.projectId;
       this.material = this.ductData.generalMaterial;
-      this.url = [`reseaux`, this.ductData.id]
+      this.url = [`reseaux`, this.ductData.id];
+      this.entityType = 'ductNetwork';
     } else if (this.ductData instanceof(DuctSection)) {
       this.parentId = this.ductData.ductNetworkId;
       this.material = this.ductData.material;
-      this.url = [`sections`, this.ductData.id]
+      this.url = [`sections`, this.ductData.id];
+      this.entityType = 'ductSection';
     }
   }
 

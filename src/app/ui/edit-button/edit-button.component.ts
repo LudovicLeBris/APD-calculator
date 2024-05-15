@@ -37,9 +37,9 @@ export class EditButtonComponent implements OnInit {
 
   goToEditEntity(): void {
     if (this.entityType == 'project') {
-      this.router.navigate(['projets/modifier', {userId: this.parentId}]);
+      this.router.navigate(['projets/modifier'], {queryParams: {userId: this.parentId, projectId: this.entityId}});
     } else if (this.entityType == 'ductNetwork') {
-      this.router.navigate(['reseaux/modifier', {projectId: this.parentId}]);
+      this.router.navigate(['reseaux/modifier'], {queryParams: {projectId: this.parentId, ductNetworkId: this.entityId}});
     } else if (this.entityType == 'ductSection') {
       this.router.navigate(['sections/modifier'], {queryParams: {ductNetworkId: this.parentId, ductSectionId: this.entityId}});
     }
