@@ -92,7 +92,20 @@ export class DuctNetworkFormComponent implements OnInit {
         }
       })
     } else {
+      this.ductNetworkService.updateDuctNetwork(this.ductNetwork).subscribe((response) => {
+        if (response.message == 'success') {
+          console.log('Duct network updated');
+          this.ductNetwork = this.ductNetworkService.jsonToDuctNetwork(response.content as JsonDuctNetwork);
+          let ductNetworks = JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[];
+          const ductNetworkIndexInLocalStorage = ductNetworks.findIndex(element => element.id == this.ductNetwork.id);
+          ductNetworks.splice(ductNetworkIndexInLocalStorage, 1);
+          ductNetworks.splice(ductNetworkIndexInLocalStorage, 0, this.ductNetworkService.ductNetworkToJson(this.ductNetwork));
+          localStorage.removeItem('ductNetworks');
+          localStorage.setItem('ductNetworks', JSON.stringify(ductNetworks));
 
+          this.router.navigate(['projets', this.project.id]);
+        }
+      })
     }
   }
 
