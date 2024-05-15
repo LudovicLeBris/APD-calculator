@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { BackButtonComponent } from '../../ui/back-button/back-button.component';
 import { Project } from '../shared/models/project.model';
+import { ProjectFormComponent } from '../project-form/project-form.component';
 
 @Component({
   selector: 'app-project-add',
   standalone: true,
   imports: [
     BackButtonComponent,
-    // ProjectFormComponent,
+    ProjectFormComponent,
   ],
   template: `
     <section class="flex justify-between items-start m-2 border rounded-lg border-primary-light dark:border-primary-dark dark:text-bg-light">
@@ -19,9 +20,9 @@ import { Project } from '../shared/models/project.model';
         <app-back-button [url]="['projets']"></app-back-button>
       </div>
     </section>
-    <!-- <section class="flex flex-col gap-2 m-2">
+    <section class="flex flex-col gap-2 m-2">
       <app-project-form [project]="project"></app-project-form>
-    </section> -->
+    </section>
   `,
   styleUrl: './project-add.component.css'
 })
