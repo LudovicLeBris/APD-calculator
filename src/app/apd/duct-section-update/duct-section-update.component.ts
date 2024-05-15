@@ -74,7 +74,7 @@ export class DuctSectionUpdateComponent implements OnInit{
   deleteDuctSection() {
     this.hideDeleteModal(false);
     this.ductSectionService.deleteDuctSection(this.ductSection).subscribe((response) => {
-      console.log(response);
+      console.log('Duct section deleted');
       this.router.navigate(['reseaux', this.ductNetwork.id])
     })
 
