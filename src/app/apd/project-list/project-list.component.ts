@@ -17,11 +17,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
+  userId: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private projectService:ProjectService,
   ) {
+    this.userId = JSON.parse(localStorage.getItem('userProfil')!).id;
   }
 
   ngOnInit(): void {
