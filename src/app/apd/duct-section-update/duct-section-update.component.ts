@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DuctSection, JsonDuctSection } from '../shared/models/duct-section.model';
 import { DuctNetwork, JsonDuctNetwork } from '../shared/models/duct-network.model';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DuctNetworkService } from '../shared/api/duct-network.service';
 import { DuctSectionService } from '../shared/api/duct-section.service';
 import { BackButtonComponent } from '../../ui/back-button/back-button.component';
@@ -16,7 +16,6 @@ import { DuctSectionDeleteComponent } from '../duct-section-delete/duct-section-
     BackButtonComponent,
     DuctSectionFormComponent,
     DeleteButtonComponent,
-    RouterOutlet,
     DuctSectionDeleteComponent
   ],
   template: `
