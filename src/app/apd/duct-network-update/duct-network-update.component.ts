@@ -7,6 +7,7 @@ import { JsonProject, Project } from '../shared/models/project.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../shared/api/project.service';
 import { DuctNetworkService } from '../shared/api/duct-network.service';
+import { DuctNetworkDeleteComponent } from '../duct-network-delete/duct-network-delete.component';
 
 @Component({
   selector: 'app-duct-network-update',
@@ -15,6 +16,7 @@ import { DuctNetworkService } from '../shared/api/duct-network.service';
     BackButtonComponent,
     DuctNetworkFormComponent,
     DeleteButtonComponent,
+    DuctNetworkDeleteComponent
   ],
   template: `
     <section class="flex justify-between items-start my-2 border rounded-lg border-primary-light dark:border-primary-dark dark:text-bg-light">
@@ -32,6 +34,9 @@ import { DuctNetworkService } from '../shared/api/duct-network.service';
     <section class="flex flex-col gap-2 m-2">
       <app-duct-network-form [ductNetwork]="ductNetwork" [project]="project"></app-duct-network-form>
     </section>
+    @if (isDeleteModalIsActive) {
+      <app-duct-network-delete (clickedOut)="hideDeleteModal($event)" (clickedDelete)="deleteDuctNetwork()"></app-duct-network-delete>
+    }
   `,
   styleUrl: './duct-network-update.component.css'
 })
