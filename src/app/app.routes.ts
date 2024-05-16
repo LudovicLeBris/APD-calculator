@@ -9,6 +9,7 @@ import { DuctSectionUpdateComponent } from './apd/duct-section-update/duct-secti
 import { DuctNetworkAddComponent } from './apd/duct-network-add/duct-network-add.component';
 import { DuctNetworkUpdateComponent } from './apd/duct-network-update/duct-network-update.component';
 import { ProjectAddComponent } from './apd/project-add/project-add.component';
+import { ProjectUpdateComponent } from './apd/project-update/project-update.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,9 @@ export const routes: Routes = [
   },
   {
     path: 'projets/ajouter', component: ProjectAddComponent
+  },
+  {
+    path: 'projets/modifier', component: ProjectUpdateComponent
   },
   {
     path: 'projets/:projectId', component: DuctNetworkListComponent,

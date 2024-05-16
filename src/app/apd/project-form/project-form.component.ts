@@ -35,13 +35,13 @@ export class ProjectFormComponent implements OnInit{
   ngOnInit(): void {
     this.isAddForm = this.router.url.includes('ajouter');
 
-    if (this.isAddForm) {
+    if (!this.isAddForm) {
       this.name = this.project.name;
-      this.generalAltitude.setValue(0);
-      this.generalTemperature.setValue(20);
-    } else {
       this.generalAltitude = this.project.generalAltitude;
       this.generalTemperature = this.project.generalTemperature;
+    } else {
+      this.generalAltitude.setValue(0);
+      this.generalTemperature.setValue(20);
     }
 
     this.form = this.formBuilder.group({

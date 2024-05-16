@@ -1,6 +1,10 @@
 <section class="flex justify-between items-start m-2 border rounded-lg border-primary-light dark:border-primary-dark dark:text-bg-light">
   <div>
-    <app-edit-button></app-edit-button>
+    <app-edit-button
+      [parentId]="project.userId"
+      entityType="project"
+      [entityId]="project.id"
+    ></app-edit-button>
   </div>
   <div class="p-2 flex flex-col gap-2">
     <h1 class="text-center font-bold text-xl">{{ project.name }}</h1>
