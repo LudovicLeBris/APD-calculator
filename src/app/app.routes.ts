@@ -10,6 +10,8 @@ import { DuctNetworkAddComponent } from './apd/duct-network-add/duct-network-add
 import { DuctNetworkUpdateComponent } from './apd/duct-network-update/duct-network-update.component';
 import { ProjectAddComponent } from './apd/project-add/project-add.component';
 import { ProjectUpdateComponent } from './apd/project-update/project-update.component';
+import { authGuard } from './shared/auth.guard';
+import { LoginComponent } from './shared/login/login.component';
 
 export const routes: Routes = [
   {
@@ -19,34 +21,38 @@ export const routes: Routes = [
   },
   {
     path: 'projets',
+    canActivate: [authGuard],
     component: ProjectListComponent,
     resolve: {projects: projectsResolver},
   },
   {
-    path: 'projets/ajouter', component: ProjectAddComponent
+    path: 'projets/ajouter', component: ProjectAddComponent, canActivate: [authGuard]
   },
   {
-    path: 'projets/modifier', component: ProjectUpdateComponent
+    path: 'projets/modifier', component: ProjectUpdateComponent, canActivate: [authGuard]
   },
   {
-    path: 'projets/:projectId', component: DuctNetworkListComponent,
+    path: 'projets/:projectId', component: DuctNetworkListComponent, canActivate: [authGuard]
   },
   {
-    path: 'reseaux/ajouter', component: DuctNetworkAddComponent
+    path: 'reseaux/ajouter', component: DuctNetworkAddComponent, canActivate: [authGuard]
   },
   {
-    path: 'reseaux/modifier', component: DuctNetworkUpdateComponent
+    path: 'reseaux/modifier', component: DuctNetworkUpdateComponent, canActivate: [authGuard]
   },
   {
-    path: 'reseaux/:ductNetworkId', component: DuctSectionListComponent,
+    path: 'reseaux/:ductNetworkId', component: DuctSectionListComponent, canActivate: [authGuard]
   },
   {
-    path: 'sections/ajouter', component: DuctSectionAddComponent
+    path: 'sections/ajouter', component: DuctSectionAddComponent, canActivate: [authGuard]
   },
   {
-    path: 'sections/modifier', component: DuctSectionUpdateComponent
+    path: 'sections/modifier', component: DuctSectionUpdateComponent, canActivate: [authGuard]
   },
   {
-    path: 'sections/:ductSectionId', component: DuctSectionDetailComponent
-  }
+    path: 'sections/:ductSectionId', component: DuctSectionDetailComponent, canActivate: [authGuard]
+  },
+  {
+    path: 'login', component: LoginComponent
+  },
 ];

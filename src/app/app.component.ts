@@ -19,9 +19,9 @@ export class AppComponent {
   title = 'APD-calculator';
 
   constructor(
-    private authService: AuthService,
+    protected authService: AuthService,
   ) {
-    this.authService.login({"email": "demo@demo.com", "password": "Azerty123!"});
+    // this.authService.login({"email": "demo@demo.com", "password": "Azerty123!"});
   }
 
 }

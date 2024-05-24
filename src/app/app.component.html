@@ -1,4 +1,6 @@
-<app-navbar class="sticky top-0 left-0 right-0 w-full z-10"></app-navbar>
+@if (authService.isLogged) {
+  <app-navbar class="sticky top-0 left-0 right-0 w-full z-10"></app-navbar>
+}
 
 <main class="mx-auto md:w-3/4 lg:w-1/2">
   <router-outlet></router-outlet>
