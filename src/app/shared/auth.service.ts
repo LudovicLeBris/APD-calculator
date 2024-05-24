@@ -19,18 +19,8 @@ export class AuthService {
   ) {}
 
   login(payload: LoginPayload) {
-    return this.http
-      .post<any>(`${this.endpoint}/login`, payload)
-      .subscribe((res:any) => {
-        localStorage.setItem('jwt', res.token);
-        this.getUserProfile().subscribe(
-          (response) => {
-            this.currentUser = response.content;
-            localStorage.setItem('userProfil', JSON.stringify(this.currentUser))
-            this.isLogged = true;
-          }
-        )
-      })
+    console.log('login');
+    return this.http.post<any>(`${this.endpoint}/login`, payload, {headers: this.headers});
   }
 
   getUserProfile(): Observable<any> {
