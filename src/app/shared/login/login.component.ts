@@ -41,11 +41,11 @@ export class LoginComponent implements OnInit {
       email: [this.email, [Validators.required, Validators.email]],
       password: [this.password, [Validators.required]]
     });
-    // if (localStorage.getItem('userProfil')) {
-    //   this.authService.isLogged = true;
-    //   this.loginSucceed = true;
-    //   this.router.navigate(['projets']);
-    // }
+    if (localStorage.getItem('userProfil')) {
+      this.authService.isLogged = true;
+      this.loginSucceed = true;
+      this.router.navigate(['projets']);
+    }
   }
 
   onSubmit():void {
@@ -64,11 +64,11 @@ export class LoginComponent implements OnInit {
           (response) => {
             this.authService.currentUser = response.content;
             localStorage.setItem('userProfil', JSON.stringify(this.authService.currentUser))
+            this.authService.isLogged = true;
+            this.loginSucceed = true;
+            this.router.navigate(['projets']);
           }
         )
-        this.authService.isLogged = true;
-        this.loginSucceed = true;
-        this.router.navigate(['projets']);
       }
     });
 

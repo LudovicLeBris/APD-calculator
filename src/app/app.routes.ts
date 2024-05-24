@@ -12,6 +12,7 @@ import { ProjectAddComponent } from './apd/project-add/project-add.component';
 import { ProjectUpdateComponent } from './apd/project-update/project-update.component';
 import { authGuard } from './shared/auth.guard';
 import { LoginComponent } from './shared/login/login.component';
+import { RegisterComponent } from './shared/register/register.component';
 
 export const routes: Routes = [
   {
@@ -55,4 +56,7 @@ export const routes: Routes = [
   {
     path: 'connexion', component: LoginComponent
   },
+  {
+    path: 'enregistrement', component: RegisterComponent
+  }
 ];

@@ -16,11 +16,14 @@ export class AuthconfigInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const jwtToken = this.authService.getToken();
 
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${jwtToken}`
-      }
-    });
+    if (!request.url.includes('register')) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      });
+    }
+
     return next.handle(request);
   }
 }
