@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.body.classList.remove('overflow-y-hidden');
     this.form = this.formBuilder.group({
       email: [this.email, [Validators.required, Validators.email]],
       password: [this.password, [Validators.required]]
