@@ -3,7 +3,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginPayload } from '../../types/loginPyaload';
+import { LoginPayload } from '../../types/loginPayload';
 
 @Component({
   selector: 'app-login',
@@ -71,7 +71,9 @@ export class LoginComponent implements OnInit {
       }
     });
 
+  }
 
-
+  goToRegister(): void {
+    this.router.navigate(['enregistrement']);
   }
 }
