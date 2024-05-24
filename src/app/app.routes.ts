@@ -53,6 +53,6 @@ export const routes: Routes = [
     path: 'sections/:ductSectionId', component: DuctSectionDetailComponent, canActivate: [authGuard]
   },
   {
-    path: 'login', component: LoginComponent
+    path: 'connexion', component: LoginComponent
   },
 ];
