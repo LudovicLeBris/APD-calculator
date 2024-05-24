@@ -13,6 +13,7 @@ import { ProjectUpdateComponent } from './apd/project-update/project-update.comp
 import { authGuard } from './shared/auth.guard';
 import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
+import { ConfirmRegisterComponent } from './shared/confirm-register/confirm-register.component';
 
 export const routes: Routes = [
   {
@@ -58,5 +59,8 @@ export const routes: Routes = [
   },
   {
     path: 'enregistrement', component: RegisterComponent
-  }
+  },
+  {
+    path: 'enregistrement/:userId', component: ConfirmRegisterComponent
+  },
 ];

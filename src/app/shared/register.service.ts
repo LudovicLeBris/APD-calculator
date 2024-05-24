@@ -18,4 +18,9 @@ export class RegisterService {
     console.log('register');
     return this.http.post<any>(`${this.endpoint}/register`, payload, {headers: this.headers});
   }
+
+  confirmRegister(id: number) {
+    console.log('confirm register');
+    return this.http.post<any>(`${this.endpoint}/register/${id}`, '')
+  }
 }
