@@ -15,6 +15,7 @@
         >
           <input
             formControlName="email"
+            class="text-bg-dark w-full"
             type="email"
             name="email"
             id="email"
@@ -42,7 +43,7 @@
         >
           <input
             formControlName="password"
-            class="text-bg-dark"
+            class="text-bg-dark w-full"
             type="password"
             name="password"
             id="password"
@@ -71,9 +72,9 @@
   <!-- <div class="dark:text-bg-light cursor-pointer hover:underline underline-offset-4">
     <p>Mot de passe oublié, cliquez ici</p>
   </div> -->
-  <!-- <div class="cursor-pointer text-center max-md:w-3/4 w-2/3 p-2 rounded-md btn-secondary">
+  <div class="cursor-pointer text-center max-md:w-3/4 w-2/3 p-2 rounded-md btn-secondary" (click)="goToRegister()">
     Créer un compte
-  </div> -->
+  </div>
   <!-- <div class="cursor-pointer text-center max-md:w-3/4 w-2/3 p-2 rounded-md btn-tertiary">
     Version sans compte
   </div> -->
