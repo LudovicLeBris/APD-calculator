@@ -43,4 +43,9 @@ export class AuthService {
     console.log('lost password');
     return this.http.post<any>(`${this.endpoint}/lostpassword`, payload, {headers: this.headers});
   }
+
+  recoverpassword(guid: string, newPassword: {newPassword: string}) {
+    console.log('recover password');
+    return this.http.patch<any>(`${this.endpoint}/recoverpassword/${guid}`, newPassword, {headers: this.headers});
+  }
 }

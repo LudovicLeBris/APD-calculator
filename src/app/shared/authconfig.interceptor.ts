@@ -16,7 +16,7 @@ export class AuthconfigInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const jwtToken = this.authService.getToken();
 
-    if (!request.url.includes('register') && !request.url.includes('lostpassword')) {
+    if (!request.url.includes('register') && !request.url.includes('lostpassword') && !request.url.includes('recoverpassword')) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${jwtToken}`

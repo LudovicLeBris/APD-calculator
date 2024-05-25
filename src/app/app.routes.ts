@@ -68,4 +68,7 @@ export const routes: Routes = [
   {
     path: 'mot-de-passe-perdu', component: LostPasswordComponent
   },
+  {
+    path: 'recuperation-mot-de-passe/:guid', component: RecoverPasswordComponent
+  },
 ];
