@@ -14,6 +14,7 @@ import { authGuard } from './shared/auth.guard';
 import { LoginComponent } from './shared/login/login.component';
 import { RegisterComponent } from './shared/register/register.component';
 import { ConfirmRegisterComponent } from './shared/confirm-register/confirm-register.component';
+import { LostPasswordComponent } from './shared/lost-password/lost-password.component';
 
 export const routes: Routes = [
   {
@@ -62,5 +63,8 @@ export const routes: Routes = [
   },
   {
     path: 'enregistrement/:userId', component: ConfirmRegisterComponent
+  },
+  {
+    path: 'recuperation-mot-de-passe', component: LostPasswordComponent
   },
 ];

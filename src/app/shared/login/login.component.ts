@@ -77,4 +77,8 @@ export class LoginComponent implements OnInit {
   goToRegister(): void {
     this.router.navigate(['enregistrement']);
   }
+
+  goToLostPassword(): void {
+    this.router.navigate(['recuperation-mot-de-passe'])
+  }
 }
