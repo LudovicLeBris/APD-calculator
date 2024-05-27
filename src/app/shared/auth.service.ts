@@ -33,10 +33,13 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.removeItem('jwt');
     localStorage.removeItem('userProfil');
     this.currentUser = {};
     this.isLogged = false;
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('projects');
+    localStorage.removeItem('ductNetworks');
+    localStorage.removeItem('ductSections');
   }
 
   lostPassword(payload: LostPasswordPayload) {
