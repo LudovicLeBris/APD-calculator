@@ -1,6 +1,6 @@
 <header class="flex justify-between items-center px-6 pt-8 pb-4 rounded-b-xl bg-primary-light dark:bg-primary-dark">
   <!-- user menu button -->
-  <div class="flex justify-center items-center text-xl font-semibold rounded-full w-9 h-9 text-bg-light dark:text-black bg-secondary-light dark:bg-primary-light cursor-pointer">
+  <div (click)="toggleUserMenu()" class="flex justify-center items-center text-xl font-semibold rounded-full w-9 h-9 text-bg-light dark:text-black bg-secondary-light dark:bg-primary-light cursor-pointer">
     <p>{{ userInitials }}</p>
   </div>
   <!-- app title -->
@@ -26,3 +26,11 @@
     }
   </div>
 </header>
+@if (isUserMenuOpen) {
+  <section class="z-10 bg-bg-light dark:bg-bg-dark dark:text-bg-light absolute w-full rounded-xl p-8">
+    <div (click)="closeUserMenu()" class="absolute top-0 right-0">
+      <app-close-button class=""></app-close-button>
+    </div>
+    <app-user-menu [userInfo]="userInfo"></app-user-menu>
+  </section>
+}
