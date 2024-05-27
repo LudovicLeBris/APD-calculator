@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <div class="h-8 text-button btn-primary-light dark:btn-primary-dark">
+    <div class="h-8 text-button btn-{{bgColor}}-light dark:btn-{{bgColor}}-dark cursor-pointer">
       <p>{{ content }}</p>
     </div>
   `,
@@ -13,4 +13,5 @@ import { Component, Input } from '@angular/core';
 })
 export class TextButtonComponent {
   @Input() content:string = 'button'
+  @Input() bgColor: 'primary' | 'secondary' | 'tertiary' | 'warning' = 'primary';
 }
