@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoaderComponent } from '../../ui/loader/loader.component';
-import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-recover-password',
@@ -29,7 +29,7 @@ export class RecoverPasswordComponent implements OnInit {
 
   constructor (
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
   ) {}
@@ -52,7 +52,7 @@ export class RecoverPasswordComponent implements OnInit {
     this.pending = true;
     this.password = this.form.get('password')!.value;
 
-    this.authService.recoverpassword(guid, {newPassword: this.password}).subscribe({
+    this.userService.recoverpassword(guid, {newPassword: this.password}).subscribe({
       next: (response => {
         this.pending = false;
         this.recoverPasswordSuccess = true;

@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LostPasswordPayload } from '../../types/lostPasswordPayload';
-import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { LoaderComponent } from '../../ui/loader/loader.component';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-lost-password',
@@ -29,7 +29,7 @@ export class LostPasswordComponent implements OnInit {
 
   constructor (
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private userService: UserService,
     private router: Router,
   ) {}
 
@@ -53,7 +53,7 @@ export class LostPasswordComponent implements OnInit {
       email: this.email,
     };
 
-    this.authService.lostPassword(lostPasswordPayload).subscribe({
+    this.userService.lostPassword(lostPasswordPayload).subscribe({
       next: (response => {
         this.pending = false;
         this.lostPasswordSucced = true;

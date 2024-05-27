@@ -3,7 +3,6 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginPayload } from '../types/loginPayload';
-import { LostPasswordPayload } from '../types/lostPasswordPayload';
 
 @Injectable({
   providedIn: 'root'
@@ -40,15 +39,5 @@ export class AuthService {
     localStorage.removeItem('projects');
     localStorage.removeItem('ductNetworks');
     localStorage.removeItem('ductSections');
-  }
-
-  lostPassword(payload: LostPasswordPayload) {
-    console.log('lost password');
-    return this.http.post<any>(`${this.endpoint}/lostpassword`, payload, {headers: this.headers});
-  }
-
-  recoverpassword(guid: string, newPassword: {newPassword: string}) {
-    console.log('recover password');
-    return this.http.patch<any>(`${this.endpoint}/recoverpassword/${guid}`, newPassword, {headers: this.headers});
   }
 }
