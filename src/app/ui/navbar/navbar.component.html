@@ -1,15 +1,15 @@
 <header class="flex justify-between items-center px-6 pt-8 pb-4 rounded-b-xl bg-primary-light dark:bg-primary-dark">
   <!-- user menu button -->
-  <div class="flex justify-center items-center text-xl font-semibold rounded-full w-9 h-9 text-bg-light dark:text-black bg-secondary-light dark:bg-primary-light">
+  <div class="flex justify-center items-center text-xl font-semibold rounded-full w-9 h-9 text-bg-light dark:text-black bg-secondary-light dark:bg-primary-light cursor-pointer">
     <p>{{ userInitials }}</p>
   </div>
   <!-- app title -->
-  <div class="flex justify-center items-center gap-2 flex-grow">
+  <div class="flex justify-center items-center gap-2 flex-grow cursor-default">
     <p class="text-xl font-bold dark:text-bg-light">APD Calculator</p>
     <img src="/assets/images/apd-bg-transparent.svg" alt="" width="36">
   </div>
   <!-- theme switching button -->
-  <div class="dark:text-bg-light" (click)="toggleDarkMode()">
+  <div class="dark:text-bg-light cursor-pointer" (click)="toggleDarkMode()">
     @if (isDarkMode) {
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9">
