@@ -4,13 +4,15 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginPayload } from '../../types/loginPayload';
+import { LoaderComponent } from '../../ui/loader/loader.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoaderComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   loginSucceed: boolean = false;
   isDarkMode: boolean = false;
+  pending:boolean = false;
 
   constructor (
     private formBuilder : FormBuilder,
@@ -50,6 +53,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit():void {
     this.loginSucceed = false;
+    this.pending = true;
     this.email = this.form.get('email')!.value;
     this.password = this.form.get('password')!.value;
     const loginPayload: LoginPayload = {
