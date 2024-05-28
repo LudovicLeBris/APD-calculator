@@ -57,20 +57,27 @@ export class LoginComponent implements OnInit {
       password: this.password,
     };
 
-    this.authService.login(loginPayload).subscribe((response) => {
-      if ('token' in response) {
+    this.authService.login(loginPayload).subscribe({
+      next: response => {
         localStorage.setItem('jwt', response.token);
-        this.authService.getUserProfile().subscribe(
-          (response) => {
+        this.authService.getUserProfile().subscribe({
+          next: (response => {
             this.authService.currentUser = response.content;
             localStorage.setItem('userProfil', JSON.stringify(this.authService.currentUser))
             this.authService.isLogged = true;
             this.loginSucceed = true;
             this.router.navigate(['projets']);
-          }
-        )
+          })
+        })
+      },
+      error: error => {
+        console.log(error)
+        this.form.reset();
+      },
+      complete: () => {
+        this.pending = false;
       }
-    });
+    })
 
   }
 
