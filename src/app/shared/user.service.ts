@@ -32,4 +32,8 @@ export class UserService {
   updateUser(payload: Partial<AppUser>) {
     return this.http.patch<any>(`${this.endpoint}/users/${this.currentUser?.id}`, payload, {headers: this.headers});
   }
+
+  updatePassword(payload: {oldPassword:string, newPassword:string}) {
+    return this.http.patch<any>(`${this.endpoint}/users/${this.currentUser?.id}/updatepassword`, payload, {headers: this.headers});
+  }
 }

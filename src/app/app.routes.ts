@@ -16,6 +16,7 @@ import { RegisterComponent } from './shared/register/register.component';
 import { ConfirmRegisterComponent } from './shared/confirm-register/confirm-register.component';
 import { LostPasswordComponent } from './shared/lost-password/lost-password.component';
 import { RecoverPasswordComponent } from './shared/recover-password/recover-password.component';
+import { UpdatePasswordComponent } from './shared/update-password/update-password.component';
 
 export const routes: Routes = [
   {
@@ -70,5 +71,8 @@ export const routes: Routes = [
   },
   {
     path: 'recuperation-mot-de-passe/:guid', component: RecoverPasswordComponent
+  },
+  {
+    path: 'modification-mot-de-passe', component: UpdatePasswordComponent
   },
 ];

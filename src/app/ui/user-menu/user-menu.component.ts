@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TextButtonComponent } from '../text-button/text-button.component';
 import { AppUser } from '../../types/user';
@@ -20,6 +20,7 @@ import { UserService } from '../../shared/user.service';
 })
 export class UserMenuComponent implements OnInit {
   @Input() userInfo!: AppUser
+  @Output('closeUserMenu') closeUserMenu: EventEmitter<any> = new EventEmitter();
   form: FormGroup = new FormGroup({});
   firstname: string = '';
   isFirstnameEnable: boolean = false;
@@ -103,6 +104,11 @@ export class UserMenuComponent implements OnInit {
       this.form.get('company')?.enable();
       this.isCompanyEnable = true;
     }
+  }
+
+  goToUpdatePassword() {
+    this.router.navigate(['modification-mot-de-passe']);
+    this.closeUserMenu.emit();
   }
 
 }

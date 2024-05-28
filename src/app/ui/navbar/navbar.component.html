@@ -31,6 +31,6 @@
     <div (click)="closeUserMenu()" class="absolute top-0 right-0">
       <app-close-button class=""></app-close-button>
     </div>
-    <app-user-menu [userInfo]="userInfo"></app-user-menu>
+    <app-user-menu [userInfo]="userInfo" (closeUserMenu)="closeUserMenu()"></app-user-menu>
   </section>
 }

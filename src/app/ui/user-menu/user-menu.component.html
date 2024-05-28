@@ -105,8 +105,8 @@
   <div class="w-full">
     <hr class="border-0.5 border-primary-light dark:border-primary-dark">
   </div>
-  <div class="w-full">
-    <app-text-button content="Changer le mot de passe" bgColor="secondary"></app-text-button>
+  <div (click)="goToUpdatePassword()" class="w-full">
+    <app-text-button content="Changer le mot de passe" bgColor="primary"></app-text-button>
   </div>
   <div (click)="logout()" class="w-full">
     <app-text-button content="Se déconnecter" bgColor="tertiary"></app-text-button>
