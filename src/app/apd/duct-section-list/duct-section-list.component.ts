@@ -9,6 +9,7 @@ import { DuctSection, JsonDuctSection } from '../shared/models/duct-section.mode
 import { DuctNetworkService } from '../shared/api/duct-network.service';
 import { DuctSectionService } from '../shared/api/duct-section.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoaderComponent } from '../../ui/loader/loader.component';
 
 @Component({
   selector: 'app-duct-section-list',
@@ -18,7 +19,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     AddButtonComponent,
     DataResultComponent,
     EditButtonComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    LoaderComponent,
   ],
   templateUrl: './duct-section-list.component.html',
   styleUrl: './duct-section-list.component.css'
@@ -26,6 +28,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DuctSectionListComponent implements OnInit {
   ductNetwork: DuctNetwork = new DuctNetwork;
   ductSections: DuctSection[] = [];
+  pending: boolean = true;
 
   constructor(
     private ductNetworkService: DuctNetworkService,
@@ -40,14 +43,25 @@ export class DuctSectionListComponent implements OnInit {
     this.ductNetwork = this.ductNetworkService.jsonToDuctNetwork(jsonDuctNetwork!);
     this.ductSectionService.ductNetwork = this.ductNetwork;
 
-    this.ductSectionService.getDuctSections().subscribe(data => {
-      if (data.message == "success") {
+    this.ductSectionService.getDuctSections().subscribe(
+      // data => {
+      // if (data.message == "success") {
+      //   localStorage.removeItem('ductSections');
+      //   localStorage.setItem('ductSections', JSON.stringify(data.content));
+      //   (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]).forEach((jsonDuctSection) => {
+      //     const ductSection: DuctSection = this.ductSectionService.jsonToDuctSection(jsonDuctSection);
+      //     this.ductSections.push(ductSection);
+      //   });
+      // }
+    {
+      next: response => {
         localStorage.removeItem('ductSections');
-        localStorage.setItem('ductSections', JSON.stringify(data.content));
+        localStorage.setItem('ductSections', JSON.stringify(response.content));
         (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]).forEach((jsonDuctSection) => {
           const ductSection: DuctSection = this.ductSectionService.jsonToDuctSection(jsonDuctSection);
           this.ductSections.push(ductSection);
         });
+        this.pending = false;
       }
     });
   }
