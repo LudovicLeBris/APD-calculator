@@ -6,13 +6,15 @@ import { Temperature } from '../shared/models/temperature.model';
 import { ProjectService } from '../shared/api/project.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { LoaderComponent } from '../../ui/loader/loader.component';
 
 @Component({
   selector: 'app-project-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoaderComponent,
   ],
   templateUrl: './project-form.component.html',
   styleUrl: './project-form.component.css'
@@ -25,6 +27,8 @@ export class ProjectFormComponent implements OnInit{
   name: string = '';
   generalAltitude = new Altitude();
   generalTemperature = new Temperature();
+
+  pending:boolean = false;
 
   constructor (
     private projectService: ProjectService,
@@ -52,25 +56,28 @@ export class ProjectFormComponent implements OnInit{
   }
 
   onSubmit(): void {
+    this.pending = true;
     this.project.name = this.form.get('name')?.value;
     this.project.generalAltitude.setValue(this.form.get('generalAltitude')?.value);
     this.project.generalTemperature.setValue(this.form.get('generalTemperature')?.value);
 
     if (this.isAddForm) {
-      this.projectService.addProject(this.project).subscribe((response) => {
-        if (response.message == 'success') {
+      this.projectService.addProject(this.project).subscribe(
+      {
+        next: response => {
           console.log('Project added');
           const jsonProject = response.content as JsonProject;
           let projects = JSON.parse(localStorage.getItem('projects')!) as JsonProject[];
           projects.push(jsonProject);
           localStorage.removeItem('projects');
           localStorage.setItem('projects', JSON.stringify(projects));
+          this.pending = false;
           this.router.navigate(['projets']);
         }
       });
     } else {
-      this.projectService.updateProject(this.project).subscribe((response) => {
-        if (response.message == 'success') {
+      this.projectService.updateProject(this.project).subscribe({
+        next: response => {
           console.log('Project updated');
           this.project = this.projectService.JsonToProject(response.content as JsonProject);
           let projects = JSON.parse(localStorage.getItem('projects')!) as JsonProject[];
@@ -79,7 +86,7 @@ export class ProjectFormComponent implements OnInit{
           projects.splice(projectIndexInLocalStorage, 0, this.projectService.projectToJson(this.project));
           localStorage.removeItem('projects');
           localStorage.setItem('projects', JSON.stringify(projects));
-
+          this.pending = false;
           this.router.navigate(['projets']);
         }
       });
