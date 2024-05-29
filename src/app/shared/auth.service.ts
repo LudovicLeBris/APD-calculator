@@ -32,12 +32,8 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('userProfil');
+    localStorage.clear();
     this.currentUser = {};
     this.isLogged = false;
-    localStorage.removeItem('projects');
-    localStorage.removeItem('ductNetworks');
-    localStorage.removeItem('ductSections');
   }
 }
