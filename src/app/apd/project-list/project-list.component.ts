@@ -4,6 +4,7 @@ import { ProjectService } from '../shared/api/project.service';
 import { ProjectCardComponent } from '../../ui/project-card/project-card.component';
 import { AddButtonComponent } from '../../ui/add-button/add-button.component';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderComponent } from '../../ui/loader/loader.component';
 
 @Component({
   selector: 'app-project-list',
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   imports: [
     ProjectCardComponent,
     AddButtonComponent,
+    LoaderComponent,
   ],
   templateUrl: './project-list.component.html',
   styleUrl: './project-list.component.css'
@@ -18,6 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   userId: number;
+  pending: boolean = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -32,15 +35,16 @@ export class ProjectListComponent implements OnInit {
       console.log(data);
     })
 
-    this.projectService.getProjects().subscribe(data => {
-      if (data.message == "success") {
+    this.projectService.getProjects().subscribe({
+      next: response => {
         localStorage.removeItem('projects');
-        localStorage.setItem('projects', JSON.stringify(data.content));
+        localStorage.setItem('projects', JSON.stringify(response.content));
         (JSON.parse(localStorage.getItem('projects')!) as JsonProject[]).forEach((jsonProject) => {
-          const project: Project = this.projectService.JsonToProject(jsonProject);
-          this.projects.push(project);
-        });
-      }
+              const project: Project = this.projectService.JsonToProject(jsonProject);
+              this.projects.push(project);
+        })
+        this.pending = false;
+      },
     })
   }
 }
