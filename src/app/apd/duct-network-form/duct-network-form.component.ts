@@ -9,6 +9,7 @@ import { Altitude } from '../shared/models/altitude.model';
 import { Temperature } from '../shared/models/temperature.model';
 import { DuctNetworkService } from '../shared/api/duct-network.service';
 import { Router } from '@angular/router';
+import { LoaderComponent } from '../../ui/loader/loader.component';
 
 @Component({
   selector: 'app-duct-network-form',
@@ -17,6 +18,7 @@ import { Router } from '@angular/router';
     CommonModule,
     ReactiveFormsModule,
     KeyValuePipe,
+    LoaderComponent,
   ],
   templateUrl: './duct-network-form.component.html',
   styleUrl: './duct-network-form.component.css'
@@ -34,6 +36,8 @@ export class DuctNetworkFormComponent implements OnInit {
   additionalApd: AdditionalApd = new AdditionalApd;
   altitude: Altitude = new Altitude;
   temperature: Temperature = new Temperature;
+
+  pending:boolean = false;
 
   constructor (
     private ductNetworkService: DuctNetworkService,
@@ -70,6 +74,7 @@ export class DuctNetworkFormComponent implements OnInit {
   }
 
   onSubmit():void {
+    this.pending = true;
     this.ductNetwork.name = this.form.get('name')?.value;
     this.ductNetwork.generalMaterial.setValue(this.form.get('material')?.value);
     this.ductNetwork.additionalApd.setValue(+this.form.get('additionalApd')?.value);
@@ -80,20 +85,21 @@ export class DuctNetworkFormComponent implements OnInit {
     console.log(this.ductNetwork);
 
     if (this.isAddForm) {
-      this.ductNetworkService.addDuctNetwork(this.ductNetwork).subscribe((response) => {
-        if (response.message == 'success') {
+      this.ductNetworkService.addDuctNetwork(this.ductNetwork).subscribe({
+        next: response => {
           console.log('Duct network added');
           const jsonDuctNetwork = response.content as JsonDuctNetwork;
           let ductNetworks = (JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[]);
           ductNetworks.push(jsonDuctNetwork);
           localStorage.removeItem('ductNetworks');
           localStorage.setItem('ductNetworks', JSON.stringify(ductNetworks));
+          this.pending = false;
           this.router.navigate(['projets', this.project.id]);
         }
       })
     } else {
-      this.ductNetworkService.updateDuctNetwork(this.ductNetwork).subscribe((response) => {
-        if (response.message == 'success') {
+      this.ductNetworkService.updateDuctNetwork(this.ductNetwork).subscribe({
+        next: response => {
           console.log('Duct network updated');
           this.ductNetwork = this.ductNetworkService.jsonToDuctNetwork(response.content as JsonDuctNetwork);
           let ductNetworks = JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[];
@@ -102,7 +108,7 @@ export class DuctNetworkFormComponent implements OnInit {
           ductNetworks.splice(ductNetworkIndexInLocalStorage, 0, this.ductNetworkService.ductNetworkToJson(this.ductNetwork));
           localStorage.removeItem('ductNetworks');
           localStorage.setItem('ductNetworks', JSON.stringify(ductNetworks));
-
+          this.pending = false;
           this.router.navigate(['projets', this.project.id]);
         }
       })
