@@ -14,6 +14,7 @@ import { Material } from '../shared/models/material.model';
 import { FlowRate } from '../shared/models/flow-rate.model';
 import { Length } from '../shared/models/length.model';
 import { AdditionalApd } from '../shared/models/additional-apd.model';
+import { LoaderComponent } from '../../ui/loader/loader.component';
 
 @Component({
   selector: 'app-duct-section-form',
@@ -21,7 +22,8 @@ import { AdditionalApd } from '../shared/models/additional-apd.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    KeyValuePipe
+    KeyValuePipe,
+    LoaderComponent,
   ],
   templateUrl: './duct-section-form.component.html',
   styleUrl: './duct-section-form.component.css'
@@ -47,6 +49,8 @@ export class DuctSectionFormComponent implements OnInit {
   SingularityList = singularityList;
   singularities: Singularity[] = [];
   additionalApd: AdditionalApd = new AdditionalApd;
+
+  pending: boolean = false;
 
   constructor(
     private ductSectionService: DuctSectionService,
@@ -117,6 +121,7 @@ export class DuctSectionFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.pending = true;
     this.ductSection.name = this.form.get('name')?.value;
     this.ductSection.material.setValue(this.form.get('material')?.value);
     this.ductSection.flowrate.setValue(+this.form.get('flowrate')?.value);
@@ -130,20 +135,21 @@ export class DuctSectionFormComponent implements OnInit {
     });
     this.ductSection.additionalApd.setValue(+this.form.get('additionalApd')?.value);
     if (this.isAddForm) {
-      this.ductSectionService.addDuctSection(this.ductSection).subscribe((response) => {
-        if (response.message == "success") {
+      this.ductSectionService.addDuctSection(this.ductSection).subscribe({
+        next: response => {
           console.log('Duct section added');
           const ductSection = response.content as JsonDuctSection;
           let ductSections = (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]);
           ductSections.push(ductSection);
           localStorage.removeItem('ductSections');
           localStorage.setItem('ductSections', JSON.stringify(ductSections));
+          this.pending = false;
           this.router.navigate(['sections', ductSection.id]);
         }
       });
     } else {
-      this.ductSectionService.updateDuctSection(this.ductSection).subscribe((response) => {
-        if (response.message == "success") {
+      this.ductSectionService.updateDuctSection(this.ductSection).subscribe({
+        next: response => {
           console.log('Duct section updated');
           this.ductSection = this.ductSectionService.jsonToDuctSection(response.content as JsonDuctSection);
           let ductSections = (JSON.parse(localStorage.getItem('ductSections')!) as JsonDuctSection[]);
@@ -152,11 +158,10 @@ export class DuctSectionFormComponent implements OnInit {
           ductSections.splice(ductSectionIndexInlocalStorage, 0, this.ductSectionService.ductSectionToJson(this.ductSection));
           localStorage.removeItem('ductSections');
           localStorage.setItem('ductSections', JSON.stringify(ductSections));
-
+          this.pending = false;
           this.router.navigate(['sections', this.ductSection.id]);
         }
       });
-
     }
   }
 
