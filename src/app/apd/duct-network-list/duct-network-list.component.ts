@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DuctNetworkService } from '../shared/api/duct-network.service';
 import { DuctNetwork, JsonDuctNetwork } from '../shared/models/duct-network.model';
 import { ProjectService } from '../shared/api/project.service';
+import { LoaderComponent } from '../../ui/loader/loader.component';
 
 @Component({
   selector: 'app-duct-network-list',
@@ -18,7 +19,8 @@ import { ProjectService } from '../shared/api/project.service';
     AddButtonComponent,
     DataResultComponent,
     EditButtonComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    LoaderComponent,
   ],
   templateUrl: './duct-network-list.component.html',
   styleUrl: './duct-network-list.component.css'
@@ -26,6 +28,7 @@ import { ProjectService } from '../shared/api/project.service';
 export class DuctNetworkListComponent implements OnInit {
   project: Project = new Project;
   ductNetworks: DuctNetwork[] = [];
+  pending:boolean = true;
 
   constructor(
     private projectService: ProjectService,
@@ -40,14 +43,15 @@ export class DuctNetworkListComponent implements OnInit {
     this.project = this.projectService.JsonToProject(jsonProject!);
     this.ductNetworkService.project = this.project;
 
-    this.ductNetworkService.getDuctNetworks().subscribe(data => {
-      if (data.message == "success") {
+    this.ductNetworkService.getDuctNetworks().subscribe({
+      next: response => {
         localStorage.removeItem('ductNetworks');
-        localStorage.setItem('ductNetworks', JSON.stringify(data.content));
+        localStorage.setItem('ductNetworks', JSON.stringify(response.content));
         (JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[]).forEach((jsonDuctNetwork) => {
           const ductNetwork: DuctNetwork = this.ductNetworkService.jsonToDuctNetwork(jsonDuctNetwork);
           this.ductNetworks.push(ductNetwork);
         });
+        this.pending = false;
       }
     });
   }
