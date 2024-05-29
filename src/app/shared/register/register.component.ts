@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RegisterService } from '../register.service';
 import { RegisterPayload } from '../../types/registerPayload';
 import { delay } from 'rxjs';
+import { LoaderComponent } from '../../ui/loader/loader.component';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,7 @@ import { delay } from 'rxjs';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    LoaderComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -24,7 +26,11 @@ export class RegisterComponent implements OnInit {
   firstname: string = '';
   company: string = '';
   isDarkMode: boolean = false;
+  showModal: boolean = false;
   registerSucceed: boolean = false;
+  emailAlreadyUsed: boolean = false;
+  registerFailed: boolean = false;
+  pending: boolean = false;
 
   constructor (
     private formBuilder: FormBuilder,
@@ -49,7 +55,9 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.pending = true;
     this.registerSucceed = false;
+    this.showModal = true;
     this.email = this.form.get('email')!.value;
     this.password = this.form.get('password')!.value;
     this.lastname = this.form.get('lastname')!.value;
@@ -63,10 +71,20 @@ export class RegisterComponent implements OnInit {
       company: this.company
     };
 
-    this.registerService.register(registerPayload).subscribe((response) => {
-      if (response.message == 'success') {
+    this.registerService.register(registerPayload).subscribe({
+      next: response => {
         this.registerSucceed = true;
         document.body.classList.add('overflow-y-hidden');
+        this.pending = false;
+      },
+      error: error => {
+        this.pending = false;
+        const errorContent: {field: string, message: string}[] = error.error.content;
+        if (errorContent[0].message = 'Email already used') {
+          this.emailAlreadyUsed = true;
+        } else {
+          this.registerFailed = true;
+        }
       }
     });
   }

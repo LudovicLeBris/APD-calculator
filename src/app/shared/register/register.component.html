@@ -132,7 +132,7 @@
         class="mt-2 p-2 rounded-md bg-primary-light dark:bg-primary-dark dark:text-bg-light font-semibold"
         [ngClass]="{'bg-warning-light dark:bg-warning-dark text-tertiary-light dark:text-tertiary-dark cursor-not-allowed': form.invalid}"
       >
-      Se connecter
+      S'enregistrer
       </button>
 
     </form>
@@ -159,21 +159,52 @@
     }
   </div>
 </div>
-@if (registerSucceed) {
+@if (showModal) {
   <div  class="absolute top-0 left-0 w-full h-full z-10 bg-black opacity-50"></div>
   <div class="w-11/12 p-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col justify-center items-center gap-4 text-center bg-bg-light dark:bg-bg-dark dark:text-bg-light rounded-md">
-    <p class="text-2xl font-bold uppercase">Félicitation : votre compte est créé.</p>
-    <div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-14">
-        <path fill-rule="evenodd" d="M5.478 5.559A1.5 1.5 0 0 1 6.912 4.5H9A.75.75 0 0 0 9 3H6.912a3 3 0 0 0-2.868 2.118l-2.411 7.838a3 3 0 0 0-.133.882V18a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0 0 17.088 3H15a.75.75 0 0 0 0 1.5h2.088a1.5 1.5 0 0 1 1.434 1.059l2.213 7.191H17.89a3 3 0 0 0-2.684 1.658l-.256.513a1.5 1.5 0 0 1-1.342.829h-3.218a1.5 1.5 0 0 1-1.342-.83l-.256-.512a3 3 0 0 0-2.684-1.658H3.265l2.213-7.191Z" clip-rule="evenodd" />
-        <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v6.44l1.72-1.72a.75.75 0 1 1 1.06 1.06l-3 3a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 0 1 1.06-1.06l1.72 1.72V3a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
-      </svg>
-    </div>
-    <p class="font-semibold">Un email vous a été envoyé automatiquement sur la boîte mail renseigné lors de l'enregistrement.</p>
-    <p class="font-semibold">Veuillez cliquer sur le lien dans cet email pour activer votre compte.</p>
-    <p class="font-semibold">Pensez à vérifier vos courriers indésirables.</p>
-    <div (click)="goToLogin()" class="text-button btn-primary-light dark:btn-primary-dark cursor-pointer">
-      <p class="font-bold m-2">Revenir à la page de connexion</p>
-    </div>
+    @if (pending) {
+      <app-loader></app-loader>
+    }
+    @if (registerSucceed) {
+        <p class="text-2xl font-bold uppercase">Félicitation : votre compte est créé.</p>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-14">
+            <path fill-rule="evenodd" d="M5.478 5.559A1.5 1.5 0 0 1 6.912 4.5H9A.75.75 0 0 0 9 3H6.912a3 3 0 0 0-2.868 2.118l-2.411 7.838a3 3 0 0 0-.133.882V18a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0 0 17.088 3H15a.75.75 0 0 0 0 1.5h2.088a1.5 1.5 0 0 1 1.434 1.059l2.213 7.191H17.89a3 3 0 0 0-2.684 1.658l-.256.513a1.5 1.5 0 0 1-1.342.829h-3.218a1.5 1.5 0 0 1-1.342-.83l-.256-.512a3 3 0 0 0-2.684-1.658H3.265l2.213-7.191Z" clip-rule="evenodd" />
+            <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v6.44l1.72-1.72a.75.75 0 1 1 1.06 1.06l-3 3a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 0 1 1.06-1.06l1.72 1.72V3a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <p class="font-semibold">Un email vous a été envoyé automatiquement sur la boîte mail renseigné lors de l'enregistrement.</p>
+        <p class="font-semibold">Veuillez cliquer sur le lien dans cet email pour activer votre compte.</p>
+        <p class="font-semibold">Pensez à vérifier vos courriers indésirables.</p>
+        <div (click)="goToLogin()" class="text-button btn-primary-light dark:btn-primary-dark cursor-pointer">
+          <p class="font-bold m-2">Revenir à la page de connexion</p>
+        </div>
+    }
+    @if (emailAlreadyUsed) {
+      <p class="text-2xl font-bold uppercase">L'email utilisé est déjà utilisé.</p>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-14">
+          <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <p class="font-semibold">Veuillez utiliser un autre email.</p>
+      <p class="font-semibold">Peut-être avez vous déjà un compte actif. Vous pouvez effectuer la prodédure de récupération de mot de passe.</p>
+      <div (click)="goToLogin()" class="text-button btn-primary-light dark:btn-primary-dark cursor-pointer">
+        <p class="font-bold m-2">Revenir à la page de connexion</p>
+      </div>
+    }
+    @if (registerFailed) {
+      <p class="text-2xl font-bold uppercase">L'enregistrement à échoué.</p>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-14">
+          <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <p class="font-semibold">Veuillez contacter l'administrateur : admin&commat;aeraulic.com.</p>
+      <div (click)="goToLogin()" class="text-button btn-primary-light dark:btn-primary-dark cursor-pointer">
+        <p class="font-bold m-2">Revenir à la page de connexion</p>
+      </div>
+    }
+
   </div>
 }
