@@ -1,0 +1,24 @@
+<div class="flex justify-center gap-2">
+  <div class="flex justify-end items-center gap-1">
+    <!-- data result icon -->
+    <div class="size-8">
+      <img src="{{icon}}" alt="{{name}} icon" >
+    </div>
+    <!-- data result name -->
+    <div>
+      {{name}} :
+    </div>
+  </div>
+  <div class="flex justify-star items-center gap-1">
+    <!-- data result value -->
+    <div>
+      {{value}}
+    </div>
+    <!-- data result unit (falcutative) -->
+    @if (unit) {
+    <div>
+      {{unit}}
+    </div>
+    }
+  </div>
+</div>

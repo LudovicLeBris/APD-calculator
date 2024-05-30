@@ -1,0 +1,407 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="flex flex-col gap-2">
+
+  <!-- duct section name -->
+  <div class="dark:text-bg-light ">
+    <label for="name" >Nom de la section</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container "
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('name')!.errors && form.get('name')!.touched}"
+    >
+      <input
+        formControlName="name"
+        class="w-full text-bg-dark pl-2"
+        type="text"
+        name="name"
+        id="name"
+        required
+        placeholder="section A-B"
+      >
+    </div>
+    @if (form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) {
+      <div class="text-sm  dark:text-bg-light">
+        @if (form.get('name')!.errors!['required']) {
+          <p>Un nom est requis.</p>
+        }
+        @if (form.get('name')!.errors!['maxlength']) {
+          <p>Le nom doit faire moins de 36 caractères.</p>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- duct section material -->
+  <div class="dark:text-bg-light">
+    <label for="material">{{ ductSection.material.getName() }}</label>
+    <div class="flex gap-2 items-center">
+      <div class="flex gap-2 items-center w-full p-2 input-container" [ngClass]="{'bg-surface-light hover:border':!isMaterialEnable}">
+        <img src={{ductSection.material.getIcon()}} alt="icon representing material" class="size-6">
+        <select name="material" id="material" class="w-full text-bg-dark" formControlName="material">
+          @for (material of ductNetwork.generalMaterial.materialList|keyvalue; track material.key) {
+            @if (ductNetwork.generalMaterial.getValue() == material.key) {
+              <option value="{{material.key}}" selected>{{material.value}}</option>
+            } @else {
+              <option value="{{material.key}}">{{material.value}}</option>
+            }
+          }
+        </select>
+      </div>
+      <div (click)="switchEnabledMaterial()" class=" flex-shrink-0 size-10 input-container">
+        @if (isMaterialEnable) {
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-0.5">
+            <path d="M18 1.5c2.9 0 5.25 2.35 5.25 5.25v3.75a.75.75 0 0 1-1.5 0V6.75a3.75 3.75 0 1 0-7.5 0v3a3 3 0 0 1 3 3v6.75a3 3 0 0 1-3 3H3.75a3 3 0 0 1-3-3v-6.75a3 3 0 0 1 3-3h9v-3c0-2.9 2.35-5.25 5.25-5.25Z" />
+          </svg>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-0.5">
+            <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clip-rule="evenodd" />
+          </svg>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- duct section flow rate -->
+  <div class="dark:text-bg-light">
+    <label for="flowrate">{{ductSection.flowrate.getName()}} ({{ductSection.flowrate.getUnit()}})</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container"
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('flowrate')!.errors && form.get('flowrate')!.touched}"
+    >
+      <img src={{ductSection.flowrate.getIcon()}} alt="icon representing flowrate in a duct" class="size-6">
+      <input
+        (keyup)="calculateFlowspeed()"
+        formControlName="flowrate"
+        class="w-full text-bg-dark pl-2"
+        type="number"
+        name="flowrate"
+        id="flowrate"
+        required
+        pattern="^[1-9]\d*$"
+        placeholder="2300"
+      >
+    </div>
+    @if (form.get('flowrate')?.invalid && (form.get('flowrate')?.dirty || form.get('flowrate')?.touched)) {
+      <div class="text-sm dark:text-bg-light">
+        @if (form.get('flowrate')!.errors!['required']) {
+          <p>Le débit est requis.</p>
+        }
+        @if (form.get('flowrate')!.errors!['min']) {
+          <p>Le débit doit être un nombre positif.</p>
+        }
+        @if (form.get('flowrate')!.errors!['pattern']) {
+          <p>Le débit doit être un nombre entier.</p>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- duct section shape -->
+  <div class="dark:text-bg-light flex justify-around items-center">
+    <div class="flex flex-col gap-1 justify-center items-center">
+      <div class="flex gap-2">
+        <input
+          formControlName="shape"
+          class="dark:accent-primary-dark"
+          type="radio"
+          name="shape"
+          id="circular"
+          value="circular"
+          checked
+          (change)="switchShape()"
+        >
+        <label for="circular">Circulaire</label>
+      </div>
+      <div class="size-16 border rounded-md border-primary-light dark:border-primary-dark" [ngClass]="{'border-2':shape == 'circular'}">
+        <img src="assets/images/Circular.svg" alt="" class="size-full p-1">
+      </div>
+    </div>
+    <div class="flex flex-col gap-1 justify-center items-center">
+      <div class="flex gap-2">
+        <input
+        formControlName="shape"
+        class="dark:accent-primary-dark"
+        type="radio"
+        name="shape"
+        id="rectangular"
+        value="rectangular"
+        (change)="switchShape()"
+        >
+      <label for="rectangular">Rectangulaire</label>
+      </div>
+      <div class="size-16 border rounded-md border-primary-light dark:border-primary-dark" [ngClass]="{'border-2' : shape == 'rectangular'}">
+        <img src="assets/images/Rectangular.svg" alt="" class="size-full p-1">
+      </div>
+    </div>
+  </div>
+
+@if (shape === 'circular') {
+  <div class="dark:text-bg-light">
+    <label for="diameter">{{ductSection.diameter.getName()}} ({{ductSection.diameter.getUnit()}})</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container"
+      [ngClass]="{' border-2 border-warning-light dark:border-warning-dark':form.get('diameter')!.errors && form.get('diameter')!.touched}"
+    >
+      <img src={{ductSection.diameter.getIcon()}} alt="icon representing diameter" class="size-6">
+      <select
+        (change)="calculateSection(); calculateFlowspeed()"
+        formControlName="diameter"
+        class="w-full text-bg-dark"
+        name="diameter"
+        id="diameter"
+      >
+        <option value='' disabled>Choisir le diamètre désiré</option>
+        @for (diameter of diameterList; track $index) {
+          <option value={{diameter}}>{{diameter}}</option>
+        }
+      </select>
+    </div>
+    @if (form.get('diameter')?.invalid && (form.get('diameter')?.dirty || form.get('diameter')?.touched)) {
+      <div class="text-sm  dark:text-bg-light">
+        @if (form.get('diameter')!.errors!['required']) {
+          <p>Un diamètre est requis.</p>
+        }
+      </div>
+    }
+  </div>
+} @else if (shape === 'rectangular') {
+  <div class=" dark:text-bg-light">
+    <label for="width">{{ductSection.width.getName()}} ({{ductSection.width.getUnit()}})</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container"
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('width')!.errors && form.get('width')!.touched}"
+    >
+      <img src={{ductSection.width.getIcon()}} alt="icon representing the width of a rectangle" class="size-6">
+      <input
+        (change)="calculateSection(); calculateFlowspeed()"
+        formControlName="width"
+        class="w-full text-bg-dark"
+        type="number"
+        step="0.01"
+        name="width"
+        id="width"
+        placeholder="400.2"
+      >
+    </div>
+    @if (form.get('width')?.invalid && (form.get('width')?.dirty || form.get('width')?.touched)) {
+      <div class="text-sm  dark:text-bg-light">
+        @if (form.get('width')!.errors!['required']) {
+          <p>La largeur de la gaine est requise.</p>
+        }
+        @if (form.get('width')!.errors!['min']) {
+          <p>La largeur doit être un nombre positif supérieur à 0.</p>
+        }
+      </div>
+    }
+  </div>
+  <div class=" dark:text-bg-light">
+    <label for="height">{{ductSection.height.getName()}} ({{ductSection.height.getUnit()}})</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container"
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('height')!.errors && form.get('height')!.touched}"
+    >
+      <img src={{ductSection.height.getIcon()}} alt="icon representing the height of a rectangle" class="size-6">
+      <input
+        (change)="calculateSection(); calculateFlowspeed()"
+        formControlName="height"
+        class="w-full text-bg-dark"
+        type="number"
+        pattern="^\d*(\.\d{0,2})?$"
+        step="0.01"
+        name="height"
+        id="height"
+        placeholder="205.5"
+      >
+    </div>
+    @if (form.get('height')?.invalid && (form.get('height')?.dirty || form.get('height')?.touched)) {
+      <div class="text-sm  dark:text-bg-light">
+        @if (form.get('height')!.errors!['required']) {
+          <p>La hauteur de la gaine est requise.</p>
+        }
+        @if (form.get('height')!.errors!['min']) {
+          <p>La hauteur doit être un nombre positif supérieur à 0.</p>
+        }
+      </div>
+    }
+  </div>
+}
+
+  <div class="flex flex-col justify-center">
+    <div class="flex gap-2">
+      <!-- section's section -->
+      <div class="dark:text-bg-light w-1/2">
+        <label for="section">{{ductSection.ductSectionsSection.getName()}} ({{ductSection.ductSectionsSection.getUnit()}})</label>
+        <div
+          class="flex gap-2 items-center border rounded-md border-primary-light w-full p-2 dark:border-primary-dark bg-surface-light"
+          [ngClass]="{'border-2 border-warning-light dark:border-warning-dark':flowspeed>7 && flowspeed !== 1/0}"
+        >
+          <img src={{ductSection.ductSectionsSection.getIcon()}} alt="icon representing the section of a circle" class="size-6">
+          <input
+            formControlName="section"
+            class="w-full text-bg-dark"
+            type="text"
+            name="section"
+            id="section"
+            step="0.001"
+          >
+        </div>
+      </div>
+      <!-- flowspeed -->
+      <div class="dark:text-bg-light w-1/2">
+        <label for="flowspeed">{{ductSection.flowspeed.getName()}} ({{ductSection.flowspeed.getUnit()}})</label>
+        <div
+          class="flex gap-2 items-center border rounded-md border-primary-light w-full p-2 dark:border-primary-dark bg-surface-light"
+          [ngClass]="{'border-2 border-warning-light dark:border-warning-dark':flowspeed>7 && flowspeed !== 1/0}"
+        >
+          <img src={{ductSection.flowspeed.getIcon()}} alt="icon representing flowspeed in a duct" class="size-6">
+          <input
+            formControlName="flowspeed"
+            class="w-full text-bg-dark"
+            type="text"
+            name="flowspeed"
+            id="flowspeed"
+            step="0.001"
+          >
+        </div>
+      </div>
+    </div>
+    @if (flowspeed > 7 && flowspeed !== 1/0) {
+      <div class="text-sm dark:text-bg-light">
+        @if (flowspeed > 12) {
+          <p>La vitesse dans la gaine est beaucoup trop rapide :</p>
+        }
+        @else if (flowspeed > 7) {
+          <p>La vitesse dans la gaine est un peu trop rapide :</p>
+        }
+        <p>Augmentez les dimensions du conduit ou réduisez le débit d'air.</p>
+      </div>
+    }
+  </div>
+
+  <!-- length -->
+  <div class="dark:text-bg-light">
+    <label for="length">{{ductSection.length.getName()}} ({{ductSection.length.getUnit()}})</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container"
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('length')!.errors && form.get('length')!.touched}"
+    >
+      <img src={{ductSection.length.getIcon()}} alt="icon representing the length of a duct" class="size-6">
+      <input
+        formControlName="length"
+        class="w-full text-bg-dark pl-2"
+        type="number"
+        step="0.01"
+        name="length"
+        id="length"
+        required
+        placeholder="10.25"
+      >
+    </div>
+    @if (form.get('length')?.invalid && (form.get('length')?.dirty || form.get('length')?.touched)) {
+      <div class="text-sm dark:text-bg-light">
+        @if (form.get('length')!.errors!['required']) {
+          <p>La longueur de la gaine est requise.</p>
+        }
+        @if (form.get('length')!.errors!['min']) {
+          <p>La longueur doit être un nombre positif supérieur à 0.</p>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- singularities -->
+  <div class="dark:text-bg-light">
+    <label for="singularity">Singularités</label>
+    <div class="flex gap-2 items-center">
+      <div class="flex gap-2 items-center w-full p-2 input-container">
+        <select name="singularity" id="singularity" class="w-full text-bg-dark" formControlName="singularities">
+          <option value="" disabled selected>Ajouter une singularité</option>
+          @for (singularity of SingularityList; track $index) {
+            <option value={{singularity.getApiReference()}}>{{singularity.getName()}}</option>
+          }
+        </select>
+      </div>
+      <div (click)="addSingularity()" class="flex-shrink-0 size-10 input-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-1">
+          <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  @if (singularities.length > 0) {
+  <div class="flex flex-col gap-2 p-1  dark:text-bg-light">
+    @for (singularity of singularities; track $index) {
+    <div class="flex justify-between items-center">
+      <div class="flex gap-1 items-center">
+        <img src={{singularity.getIcon()}} alt="" class="size-8 block border rounded-md p-0.5 border-primary-light dark:border-primary-dark">
+        <p class="w-full">{{singularity.getName()}}</p>
+      </div>
+      <div class="flex gap-1 items-center justify-end">
+          <input
+            class="block size-9 text-center border rounded-md border-primary-light dark:border-primary-dark
+            [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield]"
+            disabled
+            type="number"
+            name="{{singularity.getApiReference()}} quantity"
+            id="{{singularity.getApiReference()}} quantity"
+            value={{singularity.getQuantity()}}
+          >
+        <div (click)="removeQuantityToSingularity($index)" class="flex-shrink-0 size-9 border rounded-md border-primary-light hover:border-2 dark:border-primary-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-1">
+            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm3 10.5a.75.75 0 0 0 0-1.5H9a.75.75 0 0 0 0 1.5h6Z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div (click)="addQuantityToSingularity($index)" class="flex-shrink-0 size-9 border rounded-md border-primary-light hover:border-2 dark:border-primary-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-1">
+            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+
+  <!-- additional apd -->
+  <div class="dark:text-bg-light">
+    <label for="additionalApd">{{ductSection.additionalApd.getName()}} ({{ductSection.additionalApd.getUnit()}})</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container"
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('additionalApd')!.errors && form.get('additionalApd')!.touched}"
+    >
+      <img src={{ductSection.additionalApd.getIcon()}} alt="icon representing additional apd" class="size-6">
+      <input
+        formControlName="additionalApd"
+        class="w-full text-bg-dark pl-2"
+        type="number"
+        name="additionalApd"
+        id="additionalApd"
+        placeholder="45"
+      >
+    </div>
+    @if (form.get('additionalApd')?.invalid && (form.get('additionalApd')?.dirty || form.get('additionalApd')?.touched)) {
+      <div class="text-sm dark:text-bg-light">
+        @if (form.get('additionalApd')!.errors!['min']) {
+          <p>Les PdC additionnelles doivent être un nombre positif supérieur à 0.</p>
+        }
+      </div>
+    }
+  </div>
+
+  <button
+    [disabled]="form.invalid"
+    type="submit"
+    class="mt-2 p-2 rounded-md bg-primary-light dark:bg-primary-dark dark:text-bg-light font-semibold"
+    [ngClass]="{'bg-warning-light dark:bg-warning-dark text-tertiary-light dark:text-tertiary-dark cursor-not-allowed': form.invalid}"
+  >
+  @if (isAddForm) {
+    Ajoutez la section de gaine
+  } @else {
+    Modifiez la section de gaine
+  }
+  </button>
+  @if (form.invalid) {
+    <p class="mb-2 text-center text-sm dark:text-bg-light">Il reste des champs invalides ou incomplets</p>
+  }
+</form>
+@if (pending) {
+  <app-loader></app-loader>
+}

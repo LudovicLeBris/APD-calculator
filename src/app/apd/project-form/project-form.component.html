@@ -1,0 +1,98 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="flex flex-col gap-2">
+
+  <!-- project name -->
+  <div class="dark:text-bg-light ">
+    <label for="name" >Nom du projet</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container "
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('name')!.errors && form.get('name')!.touched}"
+    >
+      <input
+        formControlName="name"
+        class="w-full text-bg-dark pl-2"
+        type="text"
+        name="name"
+        id="name"
+        required
+        placeholder="Nouveau projet"
+      >
+    </div>
+    @if (form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) {
+      <div class="text-sm  dark:text-bg-light">
+        @if (form.get('name')!.errors!['required']) {
+          <p>Un nom est requis.</p>
+        }
+        @if (form.get('name')!.errors!['maxlength']) {
+          <p>Le nom doit faire moins de 36 caractères.</p>
+        }
+      </div>
+    }
+  </div>
+
+  @if (!isAddForm) {
+    <!-- project general altitude -->
+    <div class="dark:text-bg-light ">
+      <label for="generalAltitude">{{ generalAltitude.getName() }} ({{ generalAltitude.getUnit() }} au dessus du niveau de la mer)</label>
+      <div
+      class="flex gap-2 items-center w-full p-2 input-container "
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('generalAltitude')!.errors && form.get('generalAltitude')!.touched}"
+      >
+        <img src={{generalAltitude.getIcon()}} alt="icon representing altitude" class="size-6">
+        <input
+          formControlName="generalAltitude"
+          class="w-full text-bg-dark"
+          type="number"
+          name="generalAltitude"
+          id="generalAltitude"
+          placeholder="800"
+        >
+      </div>
+      @if (form.get('generalAltitude')?.invalid && (form.get('generalAltitude')?.dirty || form.get('generalAltitude')?.touched)) {
+        <div class="text-sm dark:text-bg-light">
+          @if (form.get('generalAltitude')!.errors!['min']) {
+            <p>L'altitude doit être un nombre positif supérieur ou égal à 0.</p>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- project general temperature -->
+    <div class="dark:text-bg-light ">
+      <label for="generalTemperature">{{ generalTemperature.getName() }} ({{ generalTemperature.getUnit() }})</label>
+      <div
+      class="flex gap-2 items-center w-full p-2 input-container "
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('generalTemperature')!.errors && form.get('generalTemperature')!.touched}"
+      >
+        <img src={{generalTemperature.getIcon()}} alt="icon representing temperature" class="size-6">
+        <input
+          formControlName="generalTemperature"
+          class="w-full text-bg-dark"
+          type="number"
+          name="generalTemperature"
+          id="generalTemperature"
+          placeholder="24.5"
+        >
+      </div>
+    </div>
+  }
+
+  <button
+  [disabled]="form.invalid"
+  type="submit"
+  class="mt-2 p-2 rounded-md bg-primary-light dark:bg-primary-dark dark:text-bg-light font-semibold"
+  [ngClass]="{'bg-warning-light dark:bg-warning-dark text-tertiary-light dark:text-tertiary-dark cursor-not-allowed': form.invalid}"
+>
+@if (isAddForm) {
+  Ajoutez le projet
+} @else {
+  Modifiez le projet
+}
+</button>
+@if (form.invalid) {
+  <p class="mb-2 text-center text-sm dark:text-bg-light">Il reste des champs invalides ou incomplets</p>
+}
+
+</form>
+@if (pending) {
+  <app-loader></app-loader>
+}

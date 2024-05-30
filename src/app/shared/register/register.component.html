@@ -1,0 +1,210 @@
+<div class="flex flex-col gap-7 justify-center items-center my-8">
+  <h1 class="uppercase text-xl font-bold text-primary-light dark:text-primary-dark">apd calculator</h1>
+  <div class="size-1/4">
+    <img src="/assets/images/apd.svg" alt="logo of apd calculator">
+  </div>
+  <p class="text-lg font-semibold dark:text-bg-light">S'enregistrer</p>
+  <div class="max-md:w-3/4 w-2/3">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form" class="flex flex-col gap-2">
+
+      <div class="dark:text-bg-light ">
+        <label for="email">Identifiant (email)</label>
+        <div
+          class="flex gap-2 items-center w-full p-2 input-container "
+          [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('email')!.errors && form.get('email')!.touched}"
+        >
+          <input
+            formControlName="email"
+            class="text-bg-dark w-full"
+            type="email"
+            name="email"
+            id="email"
+            required
+            placeholder="john.doe@email.com"
+          >
+        </div>
+        @if (form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)) {
+          <div class="text-sm  dark:text-bg-light">
+            @if (form.get('email')!.errors!['required']) {
+              <p>Un email est requis.</p>
+            }
+            @if (form.get('email')!.errors!['email']) {
+              <p>Un email valide est requis.</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="dark:text-bg-light ">
+        <label for="password">Mot de passe</label>
+        <div
+          class="flex gap-2 items-center w-full p-2 input-container "
+          [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('password')!.errors && form.get('password')!.touched}"
+        >
+          <input
+            formControlName="password"
+            class="text-bg-dark w-full"
+            type="password"
+            name="password"
+            id="password"
+            required
+          >
+        </div>
+        @if (form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) {
+          <div class="text-sm  dark:text-bg-light">
+            @if (form.get('password')!.errors!['required']) {
+              <p>Un mot de passe est requis.</p>
+            }
+            @if (form.get('password')!.errors!['pattern']) {
+              <p>Le mot de passe doit contenir au moins 8 caractères, dont au moins 1 majuscule, 1 chiffre et 1 caractère spécial.</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="dark:text-bg-light ">
+        <label for="lastname">Nom de famille</label>
+        <div
+          class="flex gap-2 items-center w-full p-2 input-container "
+          [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('lastname')!.errors && form.get('lastname')!.touched}"
+        >
+          <input
+            formControlName="lastname"
+            class="text-bg-dark w-full"
+            type="lastname"
+            name="lastname"
+            id="lastname"
+            required
+            placeholder="Dupond"
+          >
+        </div>
+        @if (form.get('lastname')?.invalid && (form.get('lastname')?.dirty || form.get('lastname')?.touched)) {
+          <div class="text-sm  dark:text-bg-light">
+            @if (form.get('lastname')!.errors!['required']) {
+              <p>Un nom de famille est requis.</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="dark:text-bg-light ">
+        <label for="firstname">Prénom</label>
+        <div
+          class="flex gap-2 items-center w-full p-2 input-container "
+          [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('firstname')!.errors && form.get('firstname')!.touched}"
+        >
+          <input
+            formControlName="firstname"
+            class="text-bg-dark w-full"
+            type="firstname"
+            name="firstname"
+            id="firstname"
+            required
+            placeholder="Jean"
+          >
+        </div>
+        @if (form.get('firstname')?.invalid && (form.get('firstname')?.dirty || form.get('firstname')?.touched)) {
+          <div class="text-sm  dark:text-bg-light">
+            @if (form.get('firstname')!.errors!['required']) {
+              <p>Un prénom est requis.</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="dark:text-bg-light ">
+        <label for="company">Entreprise</label>
+        <div class="flex gap-2 items-center w-full p-2 input-container ">
+          <input
+            formControlName="company"
+            class="text-bg-dark w-full"
+            type="company"
+            name="company"
+            id="company"
+            placeholder="Demo & Cie"
+          >
+        </div>
+      </div>
+
+      <button
+        [disabled]="form.invalid"
+        type="submit"
+        class="mt-2 p-2 rounded-md bg-primary-light dark:bg-primary-dark dark:text-bg-light font-semibold"
+        [ngClass]="{'bg-warning-light dark:bg-warning-dark text-tertiary-light dark:text-tertiary-dark cursor-not-allowed': form.invalid}"
+      >
+      S'enregistrer
+      </button>
+
+    </form>
+  </div>
+  <div class="cursor-pointer text-center font-semibold max-md:w-3/4 w-2/3 p-2 rounded-md bg-warning-light dark:bg-warning-dark text-bg-light" (click)="goToLogin()">
+    Annuler
+  </div>
+  <!-- <div class="cursor-pointer text-center max-md:w-3/4 w-2/3 p-2 rounded-md btn-tertiary">
+    Version sans compte
+  </div> -->
+  <div class="dark:text-bg-light bg-primary-light dark:bg-primary-dark p-1 rounded-md" (click)="toggleDarkMode()">
+    @if (isDarkMode) {
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9">
+          <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
+        </svg>
+      </div>
+    } @else {
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9">
+          <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    }
+  </div>
+</div>
+@if (showModal) {
+  <div  class="absolute top-0 left-0 w-full h-full z-10 bg-black opacity-50"></div>
+  <div class="w-11/12 p-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col justify-center items-center gap-4 text-center bg-bg-light dark:bg-bg-dark dark:text-bg-light rounded-md">
+    @if (pending) {
+      <app-loader></app-loader>
+    }
+    @if (registerSucceed) {
+        <p class="text-2xl font-bold uppercase">Félicitation : votre compte est créé.</p>
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-14">
+            <path fill-rule="evenodd" d="M5.478 5.559A1.5 1.5 0 0 1 6.912 4.5H9A.75.75 0 0 0 9 3H6.912a3 3 0 0 0-2.868 2.118l-2.411 7.838a3 3 0 0 0-.133.882V18a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0 0 17.088 3H15a.75.75 0 0 0 0 1.5h2.088a1.5 1.5 0 0 1 1.434 1.059l2.213 7.191H17.89a3 3 0 0 0-2.684 1.658l-.256.513a1.5 1.5 0 0 1-1.342.829h-3.218a1.5 1.5 0 0 1-1.342-.83l-.256-.512a3 3 0 0 0-2.684-1.658H3.265l2.213-7.191Z" clip-rule="evenodd" />
+            <path fill-rule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v6.44l1.72-1.72a.75.75 0 1 1 1.06 1.06l-3 3a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 0 1 1.06-1.06l1.72 1.72V3a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <p class="font-semibold">Un email vous a été envoyé automatiquement sur la boîte mail renseigné lors de l'enregistrement.</p>
+        <p class="font-semibold">Veuillez cliquer sur le lien dans cet email pour activer votre compte.</p>
+        <p class="font-semibold">Pensez à vérifier vos courriers indésirables.</p>
+        <div (click)="goToLogin()" class="text-button btn-primary-light dark:btn-primary-dark cursor-pointer">
+          <p class="font-bold m-2">Revenir à la page de connexion</p>
+        </div>
+    }
+    @if (emailAlreadyUsed) {
+      <p class="text-2xl font-bold uppercase">L'email utilisé est déjà utilisé.</p>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-14">
+          <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <p class="font-semibold">Veuillez utiliser un autre email.</p>
+      <p class="font-semibold">Peut-être avez vous déjà un compte actif. Vous pouvez effectuer la prodédure de récupération de mot de passe.</p>
+      <div (click)="goToLogin()" class="text-button btn-primary-light dark:btn-primary-dark cursor-pointer">
+        <p class="font-bold m-2">Revenir à la page de connexion</p>
+      </div>
+    }
+    @if (registerFailed) {
+      <p class="text-2xl font-bold uppercase">L'enregistrement à échoué.</p>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-14">
+          <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <p class="font-semibold">Veuillez contacter l'administrateur : admin&commat;aeraulic.com.</p>
+      <div (click)="goToLogin()" class="text-button btn-primary-light dark:btn-primary-dark cursor-pointer">
+        <p class="font-bold m-2">Revenir à la page de connexion</p>
+      </div>
+    }
+
+  </div>
+}

@@ -1,0 +1,28 @@
+<div (click)="goToEntity()" class="h-16 w-full flex items-center gap-2 p-1 rounded-lg bg-gradient-light dark:bg-gradient-dark dark:text-bg-light cursor-pointer">
+  <div>
+    <app-edit-button
+      class="z-10"
+      [variant]=true
+      [parentId]="parentId"
+      [entityType]="entityType"
+      [entityId]="ductData.id"
+    ></app-edit-button>
+  </div>
+  <div class="flex flex-col flex-grow">
+    <div class="flex-grow text-center font-semibold ">
+      <h3>{{ name }}</h3>
+    </div>
+    <div class="flex justify-between items-end gap-2">
+      <div class="text-sm">
+        <p>Matériau : <span>{{ material.getMaterialName() }}</span></p>
+        <p>Pdc total : <span>{{ totalApd.getValue() }}</span> Pa</p>
+      </div>
+      <div>
+        <app-more-button
+          class="z-10"
+          (click)="goToEntity()"
+        ></app-more-button>
+      </div>
+    </div>
+  </div>
+</div>

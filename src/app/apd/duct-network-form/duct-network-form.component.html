@@ -1,0 +1,171 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="flex flex-col gap-2">
+
+  <!-- duct network name -->
+  <div class="dark:text-bg-light ">
+    <label for="name" >Nom du réseau</label>
+    <div
+      class="flex gap-2 items-center w-full p-2 input-container "
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('name')!.errors && form.get('name')!.touched}"
+    >
+      <input
+        formControlName="name"
+        class="w-full text-bg-dark pl-2"
+        type="text"
+        name="name"
+        id="name"
+        required
+        placeholder="réseau extraction"
+      >
+    </div>
+    @if (form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) {
+      <div class="text-sm  dark:text-bg-light">
+        @if (form.get('name')!.errors!['required']) {
+          <p>Un nom est requis.</p>
+        }
+        @if (form.get('name')!.errors!['maxlength']) {
+          <p>Le nom doit faire moins de 36 caractères.</p>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- duct network material -->
+  <div class="dark:text-bg-light">
+    <label for="material">{{ ductNetwork.generalMaterial.getName() }}</label>
+    <div class="flex gap-2 items-center w-full p-2 input-container">
+      <img src={{ductNetwork.generalMaterial.getIcon()}} alt="icon representing material" class="size-6">
+      <select name="material" id="material" class="w-full text-bg-dark" formControlName="material">
+        <option value="" disabled selected>Choisir le matériau de la gaine</option>
+        @for (material of ductNetwork.generalMaterial.materialList|keyvalue; track material.key) {
+          <option value="{{material.key}}">{{material.value}}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- duct network additional apd -->
+  <div class="dark:text-bg-light">
+    <label for="additionalApd">{{ductNetwork.additionalApd.getName()}} ({{ductNetwork.additionalApd.getUnit()}})</label>
+    <div
+    class="flex gap-2 items-center w-full p-2 input-container"
+    [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('additionalApd')!.errors && form.get('additionalApd')!.touched}"
+  >
+    <img src={{ductNetwork.additionalApd.getIcon()}} alt="icon representing additional apd" class="size-6">
+    <input
+      formControlName="additionalApd"
+      class="w-full text-bg-dark pl-2"
+      type="number"
+      name="additionalApd"
+      id="additionalApd"
+      placeholder="45"
+    >
+  </div>
+  @if (form.get('additionalApd')?.invalid && (form.get('additionalApd')?.dirty || form.get('additionalApd')?.touched)) {
+    <div class="text-sm dark:text-bg-light">
+      @if (form.get('additionalApd')!.errors!['min']) {
+        <p>Les PdC additionnelles doivent être un nombre positif supérieur à 0.</p>
+      }
+    </div>
+  }
+  </div>
+
+  <!-- duct network altitude -->
+  <div class="dark:text-bg-light">
+    <label for="altitude">{{ductNetwork.altitude.getName()}} ({{ductNetwork.altitude.getUnit()}} au dessus du niveau de la mer)</label>
+    <div class="flex gap-2 items-center">
+      <div class="flex gap-2 items-center w-full p-2 input-container" [ngClass]="{'bg-surface-light hover:border':!isAltitudeEnable}"
+      [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('name')!.errors && form.get('altitude')!.touched}"
+    >
+      <img src={{ductNetwork.altitude.getIcon()}} alt="icon representing altitude" class="size-6">
+      <input
+        formControlName="altitude"
+        class="w-full text-bg-dark"
+        type="number"
+        name="altitude"
+        id="altitude"
+        placeholder="800"
+      >
+      </div>
+      <div (click)="switchEnableAltitude()" class=" flex-shrink-0 size-10 input-container">
+        @if (isAltitudeEnable) {
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-0.5">
+            <path d="M18 1.5c2.9 0 5.25 2.35 5.25 5.25v3.75a.75.75 0 0 1-1.5 0V6.75a3.75 3.75 0 1 0-7.5 0v3a3 3 0 0 1 3 3v6.75a3 3 0 0 1-3 3H3.75a3 3 0 0 1-3-3v-6.75a3 3 0 0 1 3-3h9v-3c0-2.9 2.35-5.25 5.25-5.25Z" />
+          </svg>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-0.5">
+            <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clip-rule="evenodd" />
+          </svg>
+        }
+      </div>
+    </div>
+    @if (form.get('altitude')?.invalid && (form.get('altitude')?.dirty || form.get('altitude')?.touched)) {
+      <div class="text-sm dark:text-bg-light">
+        @if (form.get('altitude')!.errors!['required']) {
+          <p>Une altitude est requise.</p>
+        }
+        @if (form.get('altitude')!.errors!['min']) {
+          <p>L'altitude doit être un nombre positif supérieur ou égal à 0.</p>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- duct network temperature -->
+  <div class="dark:text-bg-light">
+    <label for="altitude">{{ductNetwork.temperature.getName()}} ({{ductNetwork.temperature.getUnit()}})</label>
+    <div class="flex gap-2 items-center">
+      <div class="flex gap-2 items-center w-full p-2 input-container" [ngClass]="{'bg-surface-light hover:border':!isTemperatureEnable}"
+        [ngClass]="{'border-warning-light border-2 dark:border-warning-dark':form.get('name')!.errors && form.get('temperature')!.touched}"
+      >
+      <img src={{ductNetwork.temperature.getIcon()}} alt="icon representing temperature" class="size-6">
+      <input
+        formControlName="temperature"
+        class="w-full text-bg-dark"
+        type="number"
+        name="temperature"
+        id="temperature"
+        placeholder="24.5"
+      >
+      </div>
+      <div (click)="switchEnableTemperature()" class=" flex-shrink-0 size-10 input-container">
+        @if (isTemperatureEnable) {
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-0.5">
+            <path d="M18 1.5c2.9 0 5.25 2.35 5.25 5.25v3.75a.75.75 0 0 1-1.5 0V6.75a3.75 3.75 0 1 0-7.5 0v3a3 3 0 0 1 3 3v6.75a3 3 0 0 1-3 3H3.75a3 3 0 0 1-3-3v-6.75a3 3 0 0 1 3-3h9v-3c0-2.9 2.35-5.25 5.25-5.25Z" />
+          </svg>
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-full p-0.5">
+            <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clip-rule="evenodd" />
+          </svg>
+        }
+      </div>
+    </div>
+    @if (form.get('temperature')?.invalid && (form.get('temperature')?.dirty || form.get('temperature')?.touched)) {
+      <div class="text-sm dark:text-bg-light">
+        @if (form.get('temperature')!.errors!['required']) {
+          <p>Une temperature est requise.</p>
+        }
+      </div>
+    }
+  </div>
+
+  <button
+    [disabled]="form.invalid"
+    type="submit"
+    class="mt-2 p-2 rounded-md bg-primary-light dark:bg-primary-dark dark:text-bg-light font-semibold"
+    [ngClass]="{'bg-warning-light dark:bg-warning-dark text-tertiary-light dark:text-tertiary-dark cursor-not-allowed': form.invalid}"
+  >
+  @if (isAddForm) {
+    Ajoutez le réseau de gaine
+  } @else {
+    Modifiez le réseau de gaine
+  }
+  </button>
+  @if (form.invalid) {
+    <p class="mb-2 text-center text-sm dark:text-bg-light">Il reste des champs invalides ou incomplets</p>
+  }
+
+</form>
+@if (pending) {
+  <app-loader></app-loader>
+}
+
