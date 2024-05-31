@@ -15,6 +15,7 @@ import { FlowRate } from '../shared/models/flow-rate.model';
 import { Length } from '../shared/models/length.model';
 import { AdditionalApd } from '../shared/models/additional-apd.model';
 import { LoaderComponent } from '../../ui/loader/loader.component';
+import { DuctNetworkService } from '../shared/api/duct-network.service';
 
 @Component({
   selector: 'app-duct-section-form',
@@ -54,6 +55,7 @@ export class DuctSectionFormComponent implements OnInit {
 
   constructor(
     private ductSectionService: DuctSectionService,
+    private ductNetworkService: DuctNetworkService,
     private router: Router,
     private formBuilder: FormBuilder
   ) {
@@ -143,9 +145,22 @@ export class DuctSectionFormComponent implements OnInit {
           ductSections.push(ductSection);
           localStorage.removeItem('ductSections');
           localStorage.setItem('ductSections', JSON.stringify(ductSections));
-          this.pending = false;
-          this.router.navigate(['sections', ductSection.id]);
-        }
+
+          this.ductNetworkService.getDuctNetworkById(ductSection.ductNetworkId!).subscribe({
+            next: response => {
+              const jsonDuctNetwork = response.content as JsonDuctNetwork;
+              this.ductNetwork = this.ductNetworkService.jsonToDuctNetwork(jsonDuctNetwork);
+              let ductNetworks = (JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[]);
+              const ductNetworkIndexInLocalStorage = ductNetworks.findIndex(element => element.id == jsonDuctNetwork.id);
+              ductNetworks.splice(ductNetworkIndexInLocalStorage, 1);
+              ductNetworks.splice(ductNetworkIndexInLocalStorage, 0, jsonDuctNetwork);
+              localStorage.removeItem('ductNetworks');
+              localStorage.setItem('ductNetworks', JSON.stringify(ductNetworks));
+              this.pending = false;
+              this.router.navigate(['sections', ductSection.id]);
+            }
+          })
+        },
       });
     } else {
       this.ductSectionService.updateDuctSection(this.ductSection).subscribe({
@@ -158,8 +173,21 @@ export class DuctSectionFormComponent implements OnInit {
           ductSections.splice(ductSectionIndexInlocalStorage, 0, this.ductSectionService.ductSectionToJson(this.ductSection));
           localStorage.removeItem('ductSections');
           localStorage.setItem('ductSections', JSON.stringify(ductSections));
-          this.pending = false;
-          this.router.navigate(['sections', this.ductSection.id]);
+
+          this.ductNetworkService.getDuctNetworkById(this.ductSection.ductNetworkId!).subscribe({
+            next: response => {
+              const jsonDuctNetwork = response.content as JsonDuctNetwork;
+              this.ductNetwork = this.ductNetworkService.jsonToDuctNetwork(jsonDuctNetwork);
+              let ductNetworks = (JSON.parse(localStorage.getItem('ductNetworks')!) as JsonDuctNetwork[]);
+              const ductNetworkIndexInLocalStorage = ductNetworks.findIndex(element => element.id == jsonDuctNetwork.id);
+              ductNetworks.splice(ductNetworkIndexInLocalStorage, 1);
+              ductNetworks.splice(ductNetworkIndexInLocalStorage, 0, jsonDuctNetwork);
+              localStorage.removeItem('ductNetworks');
+              localStorage.setItem('ductNetworks', JSON.stringify(ductNetworks));
+              this.pending = false;
+              this.router.navigate(['sections', this.ductSection.id]);
+            }
+          })
         }
       });
     }
