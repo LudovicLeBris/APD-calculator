@@ -70,6 +70,16 @@
       >
       Se connecter
       </button>
+      @if (wrongCredentials) {
+        <div class="dark:text-bg-light">
+          L'identifiant ou le mot de passe sont incorrects.
+        </div>
+      }
+      @if (loginFailed) {
+        <div class="dark:text-bg-light">
+          La procédure d'identification a échouée.
+        </div>
+      }
     </form>
   </div>
   <div class="dark:text-bg-light cursor-pointer hover:underline underline-offset-4" (click)="goToLostPassword()">

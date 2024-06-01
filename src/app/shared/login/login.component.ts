@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   loginSucceed: boolean = false;
+  wrongCredentials: boolean = false;
+  loginFailed: boolean = false;
   isDarkMode: boolean = false;
   pending:boolean = false;
 
@@ -29,9 +31,7 @@ export class LoginComponent implements OnInit {
     private formBuilder : FormBuilder,
     private authService: AuthService,
     private router: Router,
-  ) {
-
-  }
+  ) {}
 
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
@@ -75,8 +75,14 @@ export class LoginComponent implements OnInit {
         })
       },
       error: error => {
-        console.log(error)
+        this.pending = false;
         this.form.reset();
+        if (error.status == 401) {
+          this.wrongCredentials = true;
+        } else {
+          this.loginFailed = true;
+          console.log(error);
+        }
       },
       complete: () => {
         this.pending = false;
